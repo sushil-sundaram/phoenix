@@ -1,0 +1,275 @@
+# cos-cli
+
+A CLI tool for managing windows and workspaces on the COSMIC Desktop Environment (Wayland).
+
+> **Note:** This is a third-party, unofficial tool. It is not affiliated with System76 or the official COSMIC project.
+
+Related PR to pin app at workspace [feat: WindowRules Workspace Assignment](https://github.com/pop-os/cosmic-comp/pull/2214)
+
+## Features
+- **List Information**: View active applications, workspaces, and outputs.
+- **Window Management**: Move applications between workspaces by their App ID.
+- **Activate Application**: Bring a specific application to the foreground.
+- **Smart Wait**: Option to wait for an application to launch before moving it.
+
+## Installation
+Ensure you have the Rust toolchain installed.
+
+````console
+cargo build --release
+````
+
+or from github directly
+
+````console
+cargo install --git https://github.com/estin/cos-cli
+````
+
+## Usage
+````console
+cos-cli [COMMAND]
+````
+
+### Commands
+
+#### `info`
+List all available apps, workspaces, outputs and seats, including the state of each app window.
+````console
+cos-cli info
+````
+Example output:
+````
+Apps:
+	[0] firefox (title: Gemini - Mozilla Firefox, state: [activated])
+	[1] org.wezfurlong.wezterm (title: cos-cli, state: [maximized])
+Workspaces:
+	[0] Group
+		Workspace: 1
+		Workspace: 2
+		Workspace: 3
+Outputs:
+	[0] Output: eDP-1
+Seats:
+	[0] Seat: seat0
+````
+
+With `--json` option it will output all info in JSON format.
+````console
+cos-cli info --json
+````
+
+<details><summary>Example output:</summary>
+
+````json
+{
+  "apps": [
+    {
+      "index": 0,
+      "app_id": "firefox",
+      "title": "Gemini - Mozilla Firefox",
+      "state": [],
+      "outputs": [
+        {
+          "index": 0,
+          "name": "HDMI-A-1"
+        }
+      ],
+      "workspaces": [
+        {
+          "group_index": 0,
+          "index": 0,
+          "workspace": "1"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "app_id": "org.wezfurlong.wezterm",
+      "title": "cos-cli",
+      "state": [
+        "activated"
+      ],
+      "outputs": [
+        {
+          "index": 0,
+          "name": "HDMI-A-1"
+        }
+      ],
+      "workspaces": [
+        {
+          "group_index": 0,
+          "index": 3,
+          "workspace": "4"
+        }
+      ]
+    }
+  ],
+  "workspace_groups": [
+    {
+      "index": 0,
+      "workspaces": [
+        {
+          "index": 0,
+          "name": "1"
+        },
+        {
+          "index": 1,
+          "name": "2"
+        },
+        {
+          "index": 2,
+          "name": "3"
+        },
+        {
+          "index": 3,
+          "name": "4"
+        },
+        {
+          "index": 4,
+          "name": "5"
+        }
+      ],
+      "outputs": [
+        "HDMI-A-1"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "index": 0,
+      "name": "HDMI-A-1"
+    }
+  ],
+  "seats": [
+    {
+      "index": 0,
+      "name": "seat-0"
+    }
+  ]
+}
+````
+
+</details>
+
+With `--discover-wg-output` it will discover which output each workspace group is on by moving an app across outputs. This is useful for populating the output information for workspace groups when the compositor does not provide it directly.
+````console
+cos-cli info --discover-wg-output
+````
+
+Using `jq` to find app index by pattern and activate app
+````console
+cos-cli activate -i $(cos-cli info --json | jq '.apps[] | select(.app_id | test("wezterm")) | .index')
+````
+
+#### `move`
+Move an application to a specific workspace.
+````console
+cos-cli move --app-id <ID> --workspace <NAME>
+````
+Arguments:
+*   `-a, --app-id <ID>`
+    The Application ID (partial match, case-insensitive)
+*   `-i, --index <INDEX>`
+    The Application index from 'info' command
+*   `-w, --workspace <INDEX>`
+    The index of the target workspace
+*   `-g, --workspace-group <INDEX>`
+    The workspace group index from 'info' command (optional)
+*   `-o, --output-index <INDEX>`
+    The output index from 'info' command (optional)
+*   `--wait <SECONDS>`
+    Wait for the app to appear (optional, only for --app-id)
+
+#### `activate`
+Activate an application.
+````console
+cos-cli activate --index <INDEX>
+````
+Arguments:
+*   `-i, --index <INDEX>`
+    The Application index from 'info' command
+*   `-s, --seat <INDEX>`
+    The Seat index from 'info' command (optional)
+
+#### `ws-activate`
+Activate a workspace.
+````console
+cos-cli ws-activate --workspace <INDEX>
+````
+Arguments:
+*   `-w, --workspace <INDEX>`
+    The index of the workspace to activate
+*   `-g, --workspace-group <INDEX>`
+    The workspace group index from 'info' command (optional)
+
+Example:
+````console
+cos-cli ws-activate -w 1
+cos-cli ws-activate -w 0 -g 1
+````
+
+#### `state`
+Set the state of an application's window (e.g., maximize, minimize, fullscreen, sticky).
+````console
+cos-cli state (--app-id <ID> | --index <INDEX>) [--wait <SECONDS>] [--maximize|--unmaximize] [--minimize|--unminimize] [--fullscreen|--unfullscreen] [--sticky|--unsticky]
+````
+Arguments:
+*   `-a, --app-id <ID>`
+    The Application ID (partial match, case-insensitive)
+*   `-i, --index <INDEX>`
+    The Application index from 'info' command
+*   `--wait <SECONDS>`
+    Wait for the app to appear (optional, only for --app-id)
+*   `--maximize`
+    Maximize the application window
+*   `--unmaximize`
+    Unmaximize the application window
+*   `--minimize`
+    Minimize the application window
+*   `--unminimize`
+    Unminimize the application window
+*   `--fullscreen`
+    Set the application window to fullscreen
+*   `--unfullscreen`
+    Unset the application window from fullscreen
+*   `--sticky`
+    Make the application window sticky (visible on all workspaces)
+*   `--unsticky`
+    Unset the application window from being sticky
+
+Examples:
+````console
+cos-cli state -i 0 --maximize
+cos-cli state --app-id firefox --sticky --fullscreen --wait 5
+cos-cli state -i 1 --unminimize
+````
+
+#### `close`
+Close an application window by its App ID or index.
+````console
+cos-cli close --app-id <ID>
+````
+Arguments:
+*   `-a, --app-id <ID>`
+    The Application ID (partial match, case-insensitive)
+*   `-i, --index <INDEX>`
+    The Application index from 'info' command
+
+Examples:
+````console
+cos-cli close -i 0
+cos-cli close --app-id firefox
+cos-cli close -a terminal
+````
+
+#### JSON-RPC Stdio Server Mode
+
+Start the CLI as a JSON-RPC server using stdin/stdout for communication:
+
+````console
+cos-cli serve
+````
+
+See [JSONRPC.md](JSONRPC.md) for all available methods, parameters, notifications, and usage examples.
+
+

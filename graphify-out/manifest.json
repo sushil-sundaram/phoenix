@@ -1,0 +1,62 @@
+{
+  "bin/cosmic-session-restore.sh": {
+    "mtime": 1789153625.8250391,
+    "seen": 1789185793.5662992,
+    "ast_hash": "dad1fc7824082360e90b0949c78090ee",
+    "semantic_hash": ""
+  },
+  "bin/cosmic-session-restorer.py": {
+    "mtime": 1789185346.7969623,
+    "seen": 1789185793.5663023,
+    "ast_hash": "1a44564c633fda04660744316b077f8a",
+    "semantic_hash": ""
+  },
+  "bin/cosmic-session-saver.py": {
+    "mtime": 1789153607.8281813,
+    "seen": 1789185793.5663035,
+    "ast_hash": "1edf68e1da2f0e3185906aefc7cecd5f",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/Cargo.toml": {
+    "mtime": 1789151028.1510832,
+    "seen": 1789185793.5663044,
+    "ast_hash": "eb316f45a8a51b2efddfc809a65918f9",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/src/dispatch.rs": {
+    "mtime": 1789151998.9455144,
+    "seen": 1789185793.566305,
+    "ast_hash": "94491a0d139b530b52b23fd424f6798d",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/src/main.rs": {
+    "mtime": 1789185325.2979703,
+    "seen": 1789185793.5663059,
+    "ast_hash": "6c25847ae9a0586d2fa3d8f53513b72e",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/src/server.rs": {
+    "mtime": 1789151028.15264,
+    "seen": 1789185793.5663066,
+    "ast_hash": "522afa298f9f3fbfbbeaf82d07bc0623",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1789154087.327436,
+    "seen": 1789185793.566307,
+    "ast_hash": "042d15e305a774cbc654cd69744aa5f2",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/JSONRPC.md": {
+    "mtime": 1789151028.1510832,
+    "seen": 1789185793.5663075,
+    "ast_hash": "f886d31b5d473af6a99980ce530bea92",
+    "semantic_hash": ""
+  },
+  "src/cos-cli/README.md": {
+    "mtime": 1789151028.1510832,
+    "seen": 1789185793.566308,
+    "ast_hash": "b4c7ee51cf9cb9d5d3e45a3e2a47572a",
+    "semantic_hash": ""
+  }
+}
