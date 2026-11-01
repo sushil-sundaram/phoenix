@@ -1,2 +1,3 @@
 bin/cos-cli
 src/cos-cli/target/
+__pycache__/
