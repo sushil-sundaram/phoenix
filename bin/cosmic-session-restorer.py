@@ -14,6 +14,7 @@ import os
 import sys
 import time
 import shutil
+import glob
 
 SNAPSHOT_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json")
 BACKUP_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json.bak")
@@ -97,6 +98,55 @@ def get_installed_flatpaks():
     _INSTALLED_FLATPAKS_CACHE = flatpaks
     return flatpaks
 
+_DESKTOP_COMMANDS_CACHE = None
+
+def get_desktop_commands():
+    global _DESKTOP_COMMANDS_CACHE
+    if _DESKTOP_COMMANDS_CACHE is not None:
+        return _DESKTOP_COMMANDS_CACHE
+
+    desktop_dirs = [
+        os.path.expanduser("~/.local/share/applications"),
+        os.path.expanduser("~/.local/share/flatpak/exports/share/applications"),
+        "/var/lib/flatpak/exports/share/applications",
+        "/usr/local/share/applications",
+        "/usr/share/applications",
+    ]
+    commands = {}
+    for d in desktop_dirs:
+        if not os.path.isdir(d):
+            continue
+        for f in glob.glob(os.path.join(d, "*.desktop")):
+            base = os.path.basename(f)[:-8]  # strip .desktop
+            wm_class = None
+            exec_cmd = None
+            name = None
+            try:
+                with open(f, "r", errors="ignore") as fp:
+                    for line in fp:
+                        line = line.strip()
+                        if line.startswith("StartupWMClass="):
+                            wm_class = line.split("=", 1)[1].strip()
+                        elif line.startswith("Exec=") and not exec_cmd:
+                            exec_cmd = line.split("=", 1)[1].strip()
+                        elif line.startswith("Name=") and not name:
+                            name = line.split("=", 1)[1].strip()
+            except Exception:
+                continue
+
+            if exec_cmd:
+                clean = re.sub(r"@@[a-zA-Z\s%]+@@", "", exec_cmd)
+                clean = re.sub(r"%[a-zA-Z]", "", clean).strip()
+                commands[base.lower()] = clean
+                if wm_class:
+                    commands[wm_class.lower()] = clean
+                if name:
+                    commands[name.lower()] = clean
+                    commands[name.lower().replace(" ", "")] = clean
+
+    _DESKTOP_COMMANDS_CACHE = commands
+    return commands
+
 def get_launch_command(app_id):
     mapping = {
         "google-chrome": "flatpak run com.google.Chrome --restore-last-session --disable-session-crashed-bubble --no-default-browser-check",
@@ -143,22 +193,33 @@ def get_launch_command(app_id):
     if shutil.which(app_id, path=env.get("PATH")):
         return app_id
 
-    # 2. If app_id is reverse-DNS (contains dots), try last segment as binary
+    # 2. Desktop file commands lookup
+    desktop_cmds = get_desktop_commands()
+    low = app_id.lower()
+    if low in desktop_cmds:
+        return desktop_cmds[low]
+    norm = low.replace("-", "").replace("_", "").replace(" ", "")
+    if norm in desktop_cmds:
+        return desktop_cmds[norm]
+
+    # 3. If app_id has dots, try last segment
     if "." in app_id:
         last_seg = app_id.split(".")[-1]
+        last_low = last_seg.lower()
+        if last_low in desktop_cmds:
+            return desktop_cmds[last_low]
         if shutil.which(last_seg, path=env.get("PATH")):
             return last_seg
 
-    # 3. Flatpak resolution: search installed flatpaks
+    # 4. Flatpak resolution: search installed flatpaks
     flatpaks = get_installed_flatpaks()
-    norm = app_id.lower().replace("-", "").replace("_", "")
     for fp in flatpaks:
         fp_norm = fp.lower().replace("-", "").replace("_", "")
         last_seg = fp.split(".")[-1].lower().replace("-", "").replace("_", "")
-        if norm == fp_norm or norm == last_seg or norm in fp_norm:
+        if norm == fp_norm or norm == last_seg or (len(norm) >= 4 and norm in fp_norm):
             return f"flatpak run {fp}"
 
-    # 4. Fallback
+    # 5. Fallback
     if "." in app_id:
         return f"flatpak run {app_id}"
     return app_id
