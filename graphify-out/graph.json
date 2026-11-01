@@ -7,7 +7,7 @@
       "label": "capture_session()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-saver.py",
-      "source_location": "L30",
+      "source_location": "L38",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_saver_capture_session",
@@ -40,10 +40,34 @@
       "norm_label": "main()"
     },
     {
+      "label": "app_ids_match()",
+      "file_type": "code",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L246",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_app_ids_match",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "app_ids_match()"
+    },
+    {
+      "label": "get_desktop_commands()",
+      "file_type": "code",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L103",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_get_desktop_commands",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "get_desktop_commands()"
+    },
+    {
       "label": "get_env()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L22",
+      "source_location": "L24",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_get_env",
@@ -52,10 +76,22 @@
       "norm_label": "get_env()"
     },
     {
+      "label": "get_installed_flatpaks()",
+      "file_type": "code",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L88",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_get_installed_flatpaks",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "get_installed_flatpaks()"
+    },
+    {
       "label": "get_launch_command()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L74",
+      "source_location": "L150",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_get_launch_command",
@@ -67,7 +103,7 @@
       "label": "get_live_state()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L108",
+      "source_location": "L277",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_get_live_state",
@@ -76,10 +112,22 @@
       "norm_label": "get_live_state()"
     },
     {
+      "label": "move_window_and_verify()",
+      "file_type": "code",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L314",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_move_window_and_verify",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "move_window_and_verify()"
+    },
+    {
       "label": "restore_session()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L159",
+      "source_location": "L360",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_restore_session",
@@ -91,7 +139,7 @@
       "label": "run_cos_cli()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L100",
+      "source_location": "L269",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_run_cos_cli",
@@ -103,13 +151,25 @@
       "label": "sanitize_chrome_environment()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L31",
+      "source_location": "L43",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_cosmic_session_restorer_sanitize_chrome_environment",
       "community": 7,
       "community_name": "cosmic-session-restorer.py",
       "norm_label": "sanitize_chrome_environment()"
+    },
+    {
+      "label": "title_similarity_score()",
+      "file_type": "code",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L298",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_title_similarity_score",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "title_similarity_score()"
     },
     {
       "label": "Arc",
@@ -878,8 +938,52 @@
       "_origin": "ast",
       "id": "readme",
       "community": 10,
-      "community_name": "Phoenix: COSMIC Session Restorer",
+      "community_name": "Setup Instructions",
       "norm_label": "readme.md"
+    },
+    {
+      "label": "1. Make Scripts Executable",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "readme_1_make_scripts_executable",
+      "community": 10,
+      "community_name": "Setup Instructions",
+      "norm_label": "1. make scripts executable"
+    },
+    {
+      "label": "2. Configure the Autostart Restorer",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "readme_2_configure_the_autostart_restorer",
+      "community": 10,
+      "community_name": "Setup Instructions",
+      "norm_label": "2. configure the autostart restorer"
+    },
+    {
+      "label": "3. Configure the Shutdown Saver Service",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "readme_3_configure_the_shutdown_saver_service",
+      "community": 10,
+      "community_name": "Setup Instructions",
+      "norm_label": "3. configure the shutdown saver service"
+    },
+    {
+      "label": "4. Enable and Start the Systemd Service",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "readme_4_enable_and_start_the_systemd_service",
+      "community": 10,
+      "community_name": "Setup Instructions",
+      "norm_label": "4. enable and start the systemd service"
     },
     {
       "label": "Architecture",
@@ -889,7 +993,7 @@
       "_origin": "ast",
       "id": "readme_architecture",
       "community": 10,
-      "community_name": "Phoenix: COSMIC Session Restorer",
+      "community_name": "Setup Instructions",
       "norm_label": "architecture"
     },
     {
@@ -900,7 +1004,7 @@
       "_origin": "ast",
       "id": "readme_features",
       "community": 10,
-      "community_name": "Phoenix: COSMIC Session Restorer",
+      "community_name": "Setup Instructions",
       "norm_label": "features"
     },
     {
@@ -911,19 +1015,19 @@
       "_origin": "ast",
       "id": "readme_phoenix_cosmic_session_restorer",
       "community": 10,
-      "community_name": "Phoenix: COSMIC Session Restorer",
+      "community_name": "Setup Instructions",
       "norm_label": "phoenix: cosmic session restorer"
     },
     {
-      "label": "Setup",
+      "label": "Setup Instructions",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "readme_setup",
+      "id": "readme_setup_instructions",
       "community": 10,
-      "community_name": "Phoenix: COSMIC Session Restorer",
-      "norm_label": "setup"
+      "community_name": "Setup Instructions",
+      "norm_label": "setup instructions"
     },
     {
       "label": "cosmic-session-saver.py",
@@ -935,50 +1039,6 @@
       "community": 11,
       "community_name": "cosmic-session-saver.py",
       "norm_label": "cosmic-session-saver.py"
-    },
-    {
-      "label": "NamedHandle",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle",
-      "community": 12,
-      "community_name": "NamedHandle",
-      "norm_label": "namedhandle"
-    },
-    {
-      "label": "NamedHandle<T>",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L134",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle_t",
-      "community": 12,
-      "community_name": "NamedHandle",
-      "norm_label": "namedhandle<t>"
-    },
-    {
-      "label": ".named()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L138",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle_t_named",
-      "community": 12,
-      "community_name": "NamedHandle",
-      "norm_label": ".named()"
-    },
-    {
-      "label": "T",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "t",
-      "community": 12,
-      "community_name": "NamedHandle",
-      "norm_label": "t"
     },
     {
       "label": "cos-cli",
@@ -1292,17 +1352,6 @@
       "norm_label": "objectid"
     },
     {
-      "label": "App",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L208",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_app",
-      "community": 3,
-      "community_name": "AppState",
-      "norm_label": "app"
-    },
-    {
       "label": "AppState",
       "file_type": "code",
       "source_file": "src/cos-cli/src/main.rs",
@@ -1312,17 +1361,6 @@
       "community": 3,
       "community_name": "AppState",
       "norm_label": "appstate"
-    },
-    {
-      "label": ".entities_count()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L190",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_appstate_entities_count",
-      "community": 3,
-      "community_name": "AppState",
-      "norm_label": ".entities_count()"
     },
     {
       "label": ".notify()",
@@ -1413,17 +1451,6 @@
       "norm_label": "sender"
     },
     {
-      "label": "Vec",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_vec",
-      "community": 3,
-      "community_name": "AppState",
-      "norm_label": "vec"
-    },
-    {
       "label": "WlOutput",
       "file_type": "code",
       "source_file": "",
@@ -1444,17 +1471,6 @@
       "community": 3,
       "community_name": "AppState",
       "norm_label": "wlseat"
-    },
-    {
-      "label": "ZcosmicToplevelHandleV1",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_zcosmictoplevelhandlev1",
-      "community": 3,
-      "community_name": "AppState",
-      "norm_label": "zcosmictoplevelhandlev1"
     },
     {
       "label": "ZcosmicToplevelManagerV1",
@@ -1479,6 +1495,17 @@
       "norm_label": "workspacegroup"
     },
     {
+      "label": "main.rs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "main.rs"
+    },
+    {
       "label": "ActivateArgs",
       "file_type": "code",
       "source_file": "src/cos-cli/src/main.rs",
@@ -1486,7 +1513,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_activateargs",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": "activateargs"
     },
     {
@@ -1497,8 +1524,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_activatewsargs",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": "activatewsargs"
+    },
+    {
+      "label": "App",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L208",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_app",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "app"
     },
     {
       "label": "AppFinderArgs",
@@ -1508,7 +1546,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appfinderargs",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": "appfinderargs"
     },
     {
@@ -1519,7 +1557,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appstate_enable_notify",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": ".enable_notify()"
     },
     {
@@ -1530,7 +1568,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_closeargs",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": "closeargs"
     },
     {
@@ -1541,7 +1579,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_closeargs_app_id",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": ".app_id()"
     },
     {
@@ -1552,7 +1590,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_closeargs_app_index",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": ".app_index()"
     },
     {
@@ -1563,7 +1601,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_closeargs_wait",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": ".wait()"
     },
     {
@@ -1574,8 +1612,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_command",
       "community": 4,
-      "community_name": "Option",
+      "community_name": "main.rs",
       "norm_label": "command"
+    },
+    {
+      "label": "find_apps()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L521",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_find_apps",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "find_apps()"
     },
     {
       "label": "InfoArgs",
@@ -1585,316 +1634,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_infoargs",
       "community": 4,
-      "community_name": "Option",
-      "norm_label": "infoargs"
-    },
-    {
-      "label": "MoveArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L415",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": "moveargs"
-    },
-    {
-      "label": ".app_id()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L468",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_app_id",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".app_id()"
-    },
-    {
-      "label": ".app_index()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L464",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_app_index",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".app_index()"
-    },
-    {
-      "label": ".wait()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L472",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_wait",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".wait()"
-    },
-    {
-      "label": "Option",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_option",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": "option"
-    },
-    {
-      "label": "Receiver",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_receiver",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": "receiver"
-    },
-    {
-      "label": "StateArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L437",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": "stateargs"
-    },
-    {
-      "label": ".app_id()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L482",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_app_id",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".app_id()"
-    },
-    {
-      "label": ".app_index()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L478",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_app_index",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".app_index()"
-    },
-    {
-      "label": ".wait()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L486",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_wait",
-      "community": 4,
-      "community_name": "Option",
-      "norm_label": ".wait()"
-    },
-    {
-      "label": "Display",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "display",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "display"
-    },
-    {
-      "label": "Formatter",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "formatter",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "formatter"
-    },
-    {
-      "label": ".new()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L186",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_appstate_new",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": ".new()"
-    },
-    {
-      "label": ".fmt()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L99",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_clierror_fmt",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": ".fmt()"
-    },
-    {
-      "label": "discover()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L577",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_discover",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "discover()"
-    },
-    {
-      "label": "find_apps()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L521",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_find_apps",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "find_apps()"
-    },
-    {
-      "label": "init_tracing()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_init_tracing",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "init_tracing()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L606",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_main",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "main()"
-    },
-    {
-      "label": "Box",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_box",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "box"
-    },
-    {
-      "label": "Connection",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_connection",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "connection"
-    },
-    {
-      "label": "Error",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_error",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "error"
-    },
-    {
-      "label": "EventQueue",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_eventqueue",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "eventqueue"
-    },
-    {
-      "label": "Result",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_result",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "result"
-    },
-    {
-      "label": "State",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L382",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_state",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "state"
-    },
-    {
-      "label": ".fmt()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L404",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_state_fmt",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": ".fmt()"
-    },
-    {
-      "label": ".try_from()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L392",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_state_try_from",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": ".try_from()"
-    },
-    {
-      "label": "TryFrom",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "tryfrom",
-      "community": 5,
-      "community_name": "find_apps",
-      "norm_label": "tryfrom"
-    },
-    {
-      "label": "main.rs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main",
-      "community": 6,
       "community_name": "main.rs",
-      "norm_label": "main.rs"
+      "norm_label": "infoargs"
     },
     {
       "label": "JsonApp",
@@ -1903,7 +1644,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonapp",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonapp"
     },
@@ -1914,7 +1655,7 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsoninfo",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsoninfo"
     },
@@ -1925,7 +1666,7 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonoutput",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonoutput"
     },
@@ -1936,7 +1677,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonoutputref",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonoutputref"
     },
@@ -1947,7 +1688,7 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonseat",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonseat"
     },
@@ -1958,7 +1699,7 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonworkspace",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonworkspace"
     },
@@ -1969,7 +1710,7 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonworkspacegroup",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonworkspacegroup"
     },
@@ -1980,9 +1721,86 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsonworkspaceref",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "jsonworkspaceref"
+    },
+    {
+      "label": "MoveArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L415",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "moveargs"
+    },
+    {
+      "label": ".app_id()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L468",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_app_id",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".app_id()"
+    },
+    {
+      "label": ".app_index()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L464",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_app_index",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".app_index()"
+    },
+    {
+      "label": ".wait()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L472",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_wait",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".wait()"
+    },
+    {
+      "label": "NamedHandle",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "namedhandle"
+    },
+    {
+      "label": "Option",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_option",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "option"
+    },
+    {
+      "label": "Receiver",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_receiver",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "receiver"
     },
     {
       "label": "String",
@@ -1991,9 +1809,394 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_string",
-      "community": 6,
+      "community": 4,
       "community_name": "main.rs",
       "norm_label": "string"
+    },
+    {
+      "label": "Vec",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_vec",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "vec"
+    },
+    {
+      "label": "ZcosmicToplevelHandleV1",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_zcosmictoplevelhandlev1",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "zcosmictoplevelhandlev1"
+    },
+    {
+      "label": "State",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L382",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_state",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "state"
+    },
+    {
+      "label": "StateArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L437",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "stateargs"
+    },
+    {
+      "label": ".app_id()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L482",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_app_id",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".app_id()"
+    },
+    {
+      "label": ".app_index()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L478",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_app_index",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".app_index()"
+    },
+    {
+      "label": ".wait()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L486",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_wait",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": ".wait()"
+    },
+    {
+      "label": "TryFrom",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "tryfrom",
+      "community": 4,
+      "community_name": "main.rs",
+      "norm_label": "tryfrom"
+    },
+    {
+      "label": "Debug",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "debug",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "debug"
+    },
+    {
+      "label": "Display",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "display",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "display"
+    },
+    {
+      "label": "Formatter",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "formatter",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "formatter"
+    },
+    {
+      "label": "From",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "from",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "from"
+    },
+    {
+      "label": ".entities_count()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L190",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_appstate_entities_count",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".entities_count()"
+    },
+    {
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L186",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_appstate_new",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".new()"
+    },
+    {
+      "label": "CliError",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_clierror",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "clierror"
+    },
+    {
+      "label": ".description()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_clierror_description",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".description()"
+    },
+    {
+      "label": ".fmt()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_clierror_fmt",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".fmt()"
+    },
+    {
+      "label": ".from()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_clierror_from",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".from()"
+    },
+    {
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_clierror_new",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".new()"
+    },
+    {
+      "label": "discover()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L577",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_discover",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "discover()"
+    },
+    {
+      "label": "init_tracing()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_init_tracing",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "init_tracing()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L606",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_main",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "main()"
+    },
+    {
+      "label": "NamedHandle<T>",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L134",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle_t",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "namedhandle<t>"
+    },
+    {
+      "label": ".named()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle_t_named",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".named()"
+    },
+    {
+      "label": "Box",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_box",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "box"
+    },
+    {
+      "label": "Connection",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_connection",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "connection"
+    },
+    {
+      "label": "Error",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_error",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "error"
+    },
+    {
+      "label": "EventQueue",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_eventqueue",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "eventqueue"
+    },
+    {
+      "label": "Result",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_result",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "result"
+    },
+    {
+      "label": "Self",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_self",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "self"
+    },
+    {
+      "label": ".fmt()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L404",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_state_fmt",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".fmt()"
+    },
+    {
+      "label": ".try_from()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L392",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_state_try_from",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": ".try_from()"
+    },
+    {
+      "label": "T",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "t",
+      "community": 5,
+      "community_name": "CliError",
+      "norm_label": "t"
+    },
+    {
+      "label": "rules/graphify.md",
+      "file_type": "document",
+      "source_file": ".agents/rules/graphify.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents_rules_graphify",
+      "community": 6,
+      "community_name": "rules/graphify.md",
+      "norm_label": "rules/graphify.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": ".agents/rules/graphify.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "agents_rules_graphify_graphify",
+      "community": 6,
+      "community_name": "rules/graphify.md",
+      "norm_label": "graphify"
     },
     {
       "label": "cosmic-session-restorer.py",
@@ -2007,92 +2210,59 @@
       "norm_label": "cosmic-session-restorer.py"
     },
     {
+      "label": "Queries cos-cli info --json and returns dynamic output maps and live apps.",
+      "file_type": "rationale",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L278",
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_rationale_278",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "queries cos-cli info --json and returns dynamic output maps and live apps."
+    },
+    {
+      "label": "Finds the window using fresh state, executes cos-cli move, and verifies that\u2026",
+      "file_type": "rationale",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L315",
+      "_origin": "ast",
+      "id": "bin_cosmic_session_restorer_rationale_315",
+      "community": 7,
+      "community_name": "cosmic-session-restorer.py",
+      "norm_label": "finds the window using fresh state, executes cos-cli move, and verifies that..."
+    },
+    {
       "label": "Disables Chrome Profile Picker and resets exit_type so tabs restore\u2026",
       "file_type": "rationale",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L32",
+      "source_location": "L44",
       "_origin": "ast",
-      "id": "bin_cosmic_session_restorer_rationale_32",
+      "id": "bin_cosmic_session_restorer_rationale_44",
       "community": 7,
       "community_name": "cosmic-session-restorer.py",
       "norm_label": "disables chrome profile picker and resets exit_type so tabs restore..."
     },
     {
-      "label": "Debug",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
+      "label": "workflows/graphify.md",
+      "file_type": "document",
+      "source_file": ".agents/workflows/graphify.md",
+      "source_location": "L1",
       "_origin": "ast",
-      "id": "debug",
+      "id": "agents_workflows_graphify",
       "community": 8,
-      "community_name": "CliError",
-      "norm_label": "debug"
+      "community_name": "workflows/graphify.md",
+      "norm_label": "workflows/graphify.md"
     },
     {
-      "label": "From",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
+      "label": "Workflow: graphify",
+      "file_type": "document",
+      "source_file": ".agents/workflows/graphify.md",
+      "source_location": "L6",
       "_origin": "ast",
-      "id": "from",
+      "id": "agents_workflows_graphify_workflow_graphify",
       "community": 8,
-      "community_name": "CliError",
-      "norm_label": "from"
-    },
-    {
-      "label": "CliError",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L90",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_clierror",
-      "community": 8,
-      "community_name": "CliError",
-      "norm_label": "clierror"
-    },
-    {
-      "label": ".description()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L111",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_clierror_description",
-      "community": 8,
-      "community_name": "CliError",
-      "norm_label": ".description()"
-    },
-    {
-      "label": ".from()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L117",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_clierror_from",
-      "community": 8,
-      "community_name": "CliError",
-      "norm_label": ".from()"
-    },
-    {
-      "label": ".new()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L93",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_clierror_new",
-      "community": 8,
-      "community_name": "CliError",
-      "norm_label": ".new()"
-    },
-    {
-      "label": "Self",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_self",
-      "community": 8,
-      "community_name": "CliError",
-      "norm_label": "self"
+      "community_name": "workflows/graphify.md",
+      "norm_label": "workflow: graphify"
     },
     {
       "label": "cosmic-session-restore.sh",
@@ -2113,7 +2283,7 @@
       "label": "PATH",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restore.sh",
-      "source_location": "L5",
+      "source_location": "L15",
       "metadata": {
         "language": "bash",
         "kind": "code"
@@ -2140,21 +2310,6 @@
       "norm_label": "cosmic-session-restore.sh script"
     },
     {
-      "label": "WAYLAND_DISPLAY",
-      "file_type": "code",
-      "source_file": "bin/cosmic-session-restore.sh",
-      "source_location": "L4",
-      "metadata": {
-        "language": "bash",
-        "kind": "code"
-      },
-      "_origin": "ast",
-      "id": "bin_cosmic_session_restore_wayland_display",
-      "community": 9,
-      "community_name": "cosmic-session-restore.sh",
-      "norm_label": "wayland_display"
-    },
-    {
       "label": "XDG_RUNTIME_DIR",
       "file_type": "code",
       "source_file": "bin/cosmic-session-restore.sh",
@@ -2176,7 +2331,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L92",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_get_launch_command",
@@ -2188,7 +2343,31 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L109",
+      "source_location": "L197",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_get_launch_command",
+      "target": "bin_cosmic_session_restorer_get_desktop_commands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L215",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_get_launch_command",
+      "target": "bin_cosmic_session_restorer_get_installed_flatpaks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L280",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_get_live_state",
@@ -2200,7 +2379,43 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L179",
+      "source_location": "L321",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_move_window_and_verify",
+      "target": "bin_cosmic_session_restorer_get_live_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L329",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_move_window_and_verify",
+      "target": "bin_cosmic_session_restorer_app_ids_match",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L355",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_move_window_and_verify",
+      "target": "bin_cosmic_session_restorer_run_cos_cli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L380",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_restore_session",
@@ -2212,7 +2427,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L194",
+      "source_location": "L393",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_restore_session",
@@ -2224,7 +2439,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L196",
+      "source_location": "L395",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_restore_session",
@@ -2236,7 +2451,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L207",
+      "source_location": "L407",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_restore_session",
@@ -2248,7 +2463,43 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L266",
+      "source_location": "L450",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_restore_session",
+      "target": "bin_cosmic_session_restorer_title_similarity_score",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L478",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_restore_session",
+      "target": "bin_cosmic_session_restorer_move_window_and_verify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L506",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_restore_session",
+      "target": "bin_cosmic_session_restorer_app_ids_match",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L535",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_restore_session",
@@ -2260,7 +2511,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L103",
+      "source_location": "L272",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer_run_cos_cli",
@@ -2272,7 +2523,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-saver.py",
-      "source_location": "L36",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_saver_capture_session",
@@ -5498,6 +5749,28 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".agents/rules/graphify.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "agents_rules_graphify",
+      "target": "agents_rules_graphify_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/workflows/graphify.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "agents_workflows_graphify",
+      "target": "agents_workflows_graphify_workflow_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restore.sh",
       "source_location": "L1",
       "weight": 1.0,
@@ -5510,40 +5783,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L100",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer",
-      "target": "bin_cosmic_session_restorer_run_cos_cli",
+      "target": "bin_cosmic_session_restorer_get_desktop_commands",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L108",
+      "source_location": "L150",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer",
-      "target": "bin_cosmic_session_restorer_get_live_state",
+      "target": "bin_cosmic_session_restorer_get_launch_command",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "bin_cosmic_session_restorer",
-      "target": "bin_cosmic_session_restorer_restore_session",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L22",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer",
@@ -5554,7 +5816,73 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L31",
+      "source_location": "L246",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_app_ids_match",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L269",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_run_cos_cli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L277",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_get_live_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L298",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_title_similarity_score",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L314",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_move_window_and_verify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L360",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer",
+      "target": "bin_cosmic_session_restorer_restore_session",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer",
@@ -5565,11 +5893,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L74",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restorer",
-      "target": "bin_cosmic_session_restorer_get_launch_command",
+      "target": "bin_cosmic_session_restorer_get_installed_flatpaks",
       "confidence_score": 1.0
     },
     {
@@ -5587,7 +5915,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-saver.py",
-      "source_location": "L30",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_saver",
@@ -5635,7 +5963,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_phoenix_cosmic_session_restorer",
-      "target": "readme_setup",
+      "target": "readme_setup_instructions",
       "confidence_score": 1.0
     },
     {
@@ -5647,6 +5975,50 @@
       "_origin": "ast",
       "source": "readme_phoenix_cosmic_session_restorer",
       "target": "readme_features",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_setup_instructions",
+      "target": "readme_1_make_scripts_executable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_setup_instructions",
+      "target": "readme_2_configure_the_autostart_restorer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_setup_instructions",
+      "target": "readme_3_configure_the_shutdown_saver_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_setup_instructions",
+      "target": "readme_4_enable_and_start_the_systemd_service",
       "confidence_score": 1.0
     },
     {
@@ -6357,33 +6729,22 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restore.sh",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restore",
+      "target": "bin_cosmic_session_restore_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restore.sh",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_cosmic_session_restore",
       "target": "bin_cosmic_session_restore_xdg_runtime_dir",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "source_file": "bin/cosmic-session-restore.sh",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "bin_cosmic_session_restore",
-      "target": "bin_cosmic_session_restore_wayland_display",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "source_file": "bin/cosmic-session-restore.sh",
-      "source_location": "L5",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "bin_cosmic_session_restore",
-      "target": "bin_cosmic_session_restore_path",
       "confidence_score": 1.0
     },
     {
@@ -6896,10 +7257,32 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "bin/cosmic-session-restorer.py",
-      "source_location": "L32",
+      "source_location": "L278",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "bin_cosmic_session_restorer_rationale_32",
+      "source": "bin_cosmic_session_restorer_rationale_278",
+      "target": "bin_cosmic_session_restorer_get_live_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L315",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_rationale_315",
+      "target": "bin_cosmic_session_restorer_move_window_and_verify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/cosmic-session-restorer.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_cosmic_session_restorer_rationale_44",
       "target": "bin_cosmic_session_restorer_sanitize_chrome_environment",
       "confidence_score": 1.0
     },
@@ -6916,5 +7299,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "91eb7eb9b367e92d59bb1a134f63a5d21c96e78e"
+  "built_at_commit": "4f53952ca44f5d8df8f604530b0f984d8d56ad87"
 }

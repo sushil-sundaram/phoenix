@@ -1,0 +1,16 @@
+{
+  "0": "server.rs",
+  "1": "Commands",
+  "2": ".event",
+  "3": "AppState",
+  "4": "Option",
+  "5": "find_apps",
+  "6": "main.rs",
+  "7": "cosmic-session-restorer.py",
+  "8": "CliError",
+  "9": "cosmic-session-restore.sh",
+  "10": "Phoenix: COSMIC Session Restorer",
+  "11": "cosmic-session-saver.py",
+  "12": "NamedHandle",
+  "13": "cos-cli"
+}
