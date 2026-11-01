@@ -18,11 +18,21 @@ COS_CLI = os.path.expanduser("~/phoenix/bin/cos-cli")
 
 def get_env():
     env = os.environ.copy()
-    if "WAYLAND_DISPLAY" not in env:
-        env["WAYLAND_DISPLAY"] = "wayland-1"
-    if "XDG_RUNTIME_DIR" not in env:
-        env["XDG_RUNTIME_DIR"] = f"/run/user/{os.getuid()}"
-    env["PATH"] = f"{os.path.expanduser('~')}/.cargo/bin:/usr/local/bin:/usr/bin:{env.get('PATH', '')}"
+    uid = os.getuid()
+    runtime_dir = env.get("XDG_RUNTIME_DIR", f"/run/user/{uid}")
+    env["XDG_RUNTIME_DIR"] = runtime_dir
+
+    if "WAYLAND_DISPLAY" not in env or not os.path.exists(os.path.join(runtime_dir, env.get("WAYLAND_DISPLAY", ""))):
+        for candidate in ["wayland-1", "wayland-0"]:
+            if os.path.exists(os.path.join(runtime_dir, candidate)):
+                env["WAYLAND_DISPLAY"] = candidate
+                break
+        else:
+            env["WAYLAND_DISPLAY"] = "wayland-1"
+
+    home = os.path.expanduser("~")
+    extra_paths = f"{home}/.cargo/bin:{home}/.pixi/bin:{home}/.local/bin:/usr/local/bin:/usr/bin"
+    env["PATH"] = f"{extra_paths}:{env.get('PATH', '')}"
     return env
 
 IGNORED_APPS = {"steam"}

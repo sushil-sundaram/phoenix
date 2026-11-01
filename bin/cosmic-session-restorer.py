@@ -13,6 +13,7 @@ import json
 import os
 import sys
 import time
+import shutil
 
 SNAPSHOT_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json")
 BACKUP_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json.bak")
@@ -21,11 +22,21 @@ IGNORED_APPS = {"steam"}
 
 def get_env():
     env = os.environ.copy()
-    if "WAYLAND_DISPLAY" not in env:
-        env["WAYLAND_DISPLAY"] = "wayland-1"
-    if "XDG_RUNTIME_DIR" not in env:
-        env["XDG_RUNTIME_DIR"] = f"/run/user/{os.getuid()}"
-    env["PATH"] = f"{os.path.expanduser('~')}/.cargo/bin:/usr/local/bin:/usr/bin:{env.get('PATH', '')}"
+    uid = os.getuid()
+    runtime_dir = env.get("XDG_RUNTIME_DIR", f"/run/user/{uid}")
+    env["XDG_RUNTIME_DIR"] = runtime_dir
+
+    if "WAYLAND_DISPLAY" not in env or not os.path.exists(os.path.join(runtime_dir, env.get("WAYLAND_DISPLAY", ""))):
+        for candidate in ["wayland-1", "wayland-0"]:
+            if os.path.exists(os.path.join(runtime_dir, candidate)):
+                env["WAYLAND_DISPLAY"] = candidate
+                break
+        else:
+            env["WAYLAND_DISPLAY"] = "wayland-1"
+
+    home = os.path.expanduser("~")
+    extra_paths = f"{home}/.cargo/bin:{home}/.pixi/bin:{home}/.local/bin:/usr/local/bin:/usr/bin"
+    env["PATH"] = f"{extra_paths}:{env.get('PATH', '')}"
     return env
 
 def sanitize_chrome_environment():
@@ -71,31 +82,126 @@ def sanitize_chrome_environment():
             except Exception as e:
                 print(f"Warning: Preferences error: {e}")
 
+_INSTALLED_FLATPAKS_CACHE = None
+
+def get_installed_flatpaks():
+    global _INSTALLED_FLATPAKS_CACHE
+    if _INSTALLED_FLATPAKS_CACHE is not None:
+        return _INSTALLED_FLATPAKS_CACHE
+    flatpaks = []
+    try:
+        out = subprocess.check_output(["flatpak", "list", "--app", "--columns=application"], text=True, stderr=subprocess.DEVNULL)
+        flatpaks = [line.strip() for line in out.splitlines() if line.strip()]
+    except Exception:
+        pass
+    _INSTALLED_FLATPAKS_CACHE = flatpaks
+    return flatpaks
+
 def get_launch_command(app_id):
     mapping = {
         "google-chrome": "flatpak run com.google.Chrome --restore-last-session --disable-session-crashed-bubble --no-default-browser-check",
         "spotify": "flatpak run com.spotify.Client",
         "discord": "flatpak run com.discordapp.Discord",
+        "com.discordapp.Discord": "flatpak run com.discordapp.Discord",
         "antigravity": "/usr/local/bin/antigravity",
         "antigravity-ide": "/usr/local/bin/antigravity-ide",
         "steam": "steam",
         "dev.warp.Warp": "/usr/bin/warp-terminal",
+        "warp": "/usr/bin/warp-terminal",
+        # Ghostty
+        "com.mitchellh.ghostty": "ghostty",
+        "ghostty": "ghostty",
+        # OrcaSlicer
+        "orca-slicer": "flatpak run com.orcaslicer.OrcaSlicer",
+        "OrcaSlicer": "flatpak run com.orcaslicer.OrcaSlicer",
+        "com.orcaslicer.OrcaSlicer": "flatpak run com.orcaslicer.OrcaSlicer",
+        # BambuStudio & PrusaSlicer
+        "bambu-studio": "flatpak run com.bambulab.BambuStudio",
+        "BambuStudio": "flatpak run com.bambulab.BambuStudio",
+        "com.bambulab.BambuStudio": "flatpak run com.bambulab.BambuStudio",
+        "prusa-slicer": "flatpak run com.prusa3d.PrusaSlicer",
+        "PrusaSlicer": "flatpak run com.prusa3d.PrusaSlicer",
+        "com.prusa3d.PrusaSlicer": "flatpak run com.prusa3d.PrusaSlicer",
+        # KiCad & FreeCAD
         "KiCad": "flatpak run org.kicad.KiCad",
         "org.kicad.KiCad": "flatpak run org.kicad.KiCad",
         "FreeCAD": "flatpak run org.freecad.FreeCAD",
         "org.freecad.FreeCAD": "flatpak run org.freecad.FreeCAD",
+        # Slack, Obsidian, Signal
+        "slack": "flatpak run com.slack.Slack",
+        "com.slack.Slack": "flatpak run com.slack.Slack",
+        "obsidian": "flatpak run md.obsidian.Obsidian",
+        "md.obsidian.Obsidian": "flatpak run md.obsidian.Obsidian",
+        "signal": "flatpak run org.signal.Signal",
+        "org.signal.Signal": "flatpak run org.signal.Signal",
     }
     if app_id in mapping:
         return mapping[app_id]
-    
-    try:
-        which = subprocess.run(["which", app_id], capture_output=True, text=True, env=get_env())
-        if which.returncode == 0:
-            return app_id
-    except Exception:
-        pass
-    
-    return f"flatpak run {app_id}"
+
+    env = get_env()
+    # 1. Direct which lookup
+    if shutil.which(app_id, path=env.get("PATH")):
+        return app_id
+
+    # 2. If app_id is reverse-DNS (contains dots), try last segment as binary
+    if "." in app_id:
+        last_seg = app_id.split(".")[-1]
+        if shutil.which(last_seg, path=env.get("PATH")):
+            return last_seg
+
+    # 3. Flatpak resolution: search installed flatpaks
+    flatpaks = get_installed_flatpaks()
+    norm = app_id.lower().replace("-", "").replace("_", "")
+    for fp in flatpaks:
+        fp_norm = fp.lower().replace("-", "").replace("_", "")
+        last_seg = fp.split(".")[-1].lower().replace("-", "").replace("_", "")
+        if norm == fp_norm or norm == last_seg or norm in fp_norm:
+            return f"flatpak run {fp}"
+
+    # 4. Fallback
+    if "." in app_id:
+        return f"flatpak run {app_id}"
+    return app_id
+
+APP_ALIASES = {
+    "orca-slicer": {"orca-slicer", "orcaslicer", "com.orcaslicer.orcaslicer"},
+    "com.orcaslicer.orcaslicer": {"orca-slicer", "orcaslicer", "com.orcaslicer.orcaslicer"},
+    "ghostty": {"ghostty", "com.mitchellh.ghostty"},
+    "com.mitchellh.ghostty": {"ghostty", "com.mitchellh.ghostty"},
+    "kicad": {"kicad", "org.kicad.kicad"},
+    "freecad": {"freecad", "org.freecad.freecad"},
+    "warp": {"warp", "dev.warp.warp"},
+    "dev.warp.warp": {"warp", "dev.warp.warp"},
+    "slack": {"slack", "com.slack.slack"},
+    "com.slack.slack": {"slack", "com.slack.slack"},
+    "obsidian": {"obsidian", "md.obsidian.obsidian"},
+    "md.obsidian.obsidian": {"obsidian", "md.obsidian.obsidian"},
+    "discord": {"discord", "com.discordapp.discord"},
+    "com.discordapp.discord": {"discord", "com.discordapp.discord"},
+}
+
+def app_ids_match(id1, id2):
+    if not id1 or not id2:
+        return False
+    i1 = id1.lower().strip()
+    i2 = id2.lower().strip()
+    if i1 == i2:
+        return True
+    if i1 in APP_ALIASES.get(i2, set()) or i2 in APP_ALIASES.get(i1, set()):
+        return True
+    if i1.endswith("." + i2) or i2.endswith("." + i1):
+        return True
+    return False
+
+SINGLE_INSTANCE_APPS = {
+    "google-chrome", "chromium", "firefox", "brave-browser",
+    "spotify", "discord", "com.discordapp.discord",
+    "slack", "com.slack.slack",
+    "signal", "org.signal.signal",
+    "antigravity", "antigravity-ide", "steam",
+    "obsidian", "md.obsidian.obsidian",
+    "io.podman_desktop.podmandesktop",
+}
 
 def run_cos_cli(args):
     cmd = [COS_CLI] + args
@@ -184,17 +290,23 @@ def restore_session():
         key = (app.get("output_name", ""), app.get("workspace", 0))
         workspace_window_counts[key] = workspace_window_counts.get(key, 0) + 1
 
-    # 1. Launch all applications (skipping ignored apps like steam)
+    # 1. Launch applications
     launched_apps = set()
     for app in saved_apps:
         app_id = app["app_id"]
         if app_id.lower() in IGNORED_APPS:
             continue
-        if app_id not in launched_apps:
-            cmd = get_launch_command(app_id)
-            print(f"Spawning application '{app_id}': {cmd}")
-            subprocess.Popen(f"{cmd} &", shell=True, env=get_env())
-            launched_apps.add(app_id)
+        
+        # Single-instance apps are launched only once; multi-window apps (like terminals)
+        # get launched once per window in saved_apps
+        if app_id.lower() in SINGLE_INSTANCE_APPS and app_id in launched_apps:
+            continue
+
+        cmd = get_launch_command(app_id)
+        print(f"Spawning application '{app_id}': {cmd}")
+        subprocess.Popen(f"{cmd} &", shell=True, env=get_env())
+        launched_apps.add(app_id)
+        time.sleep(0.3)
 
     # 2. Poll for live windows to appear and Chrome titles to resolve (up to 40 seconds)
     print("Waiting for windows to spawn and titles to resolve...")
@@ -250,7 +362,7 @@ def restore_session():
         for live in live_windows:
             if live["live_index"] in matched_live_indices:
                 continue
-            if live["app_id"].lower() == app_id.lower():
+            if app_ids_match(live["app_id"], app_id):
                 if saved_title and (saved_title in live["title"] or live["title"] in saved_title):
                     candidate = live
                     break
