@@ -1,7 +1,7 @@
 # Graph Report - phoenix  (2026-11-16)
 
 ## Corpus Check
-- 17 files · ~16,610 words
+- 17 files · ~15,739 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a698964a`
+- Built from commit: `0507dd85`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -29,7 +29,7 @@
 - cosmic-session-saver.py
 - phoenix
 - cos-cli
-- PhoenixProfilePopup
+- WorkspaceLayoutsPopup
 - main.rs
 - String
 - NamedHandle
@@ -100,9 +100,9 @@ Nodes (4): capture_session(), get_env(), main(), save_session()
 Cohesion: 0.11
 Nodes (25): cmd_applet_install(), cmd_applet_status(), cmd_applet_uninstall(), cmd_popup(), cmd_profile_add(), cmd_profile_detect(), cmd_profile_edit(), cmd_profile_list() (+17 more)
 
-### Community 14 - "PhoenixProfilePopup"
+### Community 14 - "WorkspaceLayoutsPopup"
 Cohesion: 0.22
-Nodes (4): check_single_instance_toggle(), main(), PhoenixProfilePopup, If already running, toggle by sending SIGTERM or closing.
+Nodes (4): check_single_instance_toggle(), main(), If already running, toggle by closing., WorkspaceLayoutsPopup
 
 ### Community 15 - "main.rs"
 Cohesion: 0.23

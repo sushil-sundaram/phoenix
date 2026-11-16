@@ -244,38 +244,51 @@ def cmd_applet_status(args):
     is_installed = False
     if os.path.exists(wings_file):
         with open(wings_file, "r") as f:
-            is_installed = "com.phoenix.CosmicPanelProfileButton" in f.read()
+            content = f.read()
+            is_installed = "com.system76.CosmicPanelLayoutsButton" in content or "com.phoenix.CosmicPanelProfileButton" in content
 
-    ps_out = subprocess.run(["pgrep", "-f", "com.phoenix.CosmicAppletProfile"], capture_output=True, text=True)
+    ps_out = subprocess.run(["pgrep", "-f", "CosmicAppletWorkspaceLayouts|CosmicAppletProfile"], capture_output=True, text=True)
     is_running = ps_out.returncode == 0
     pids = ps_out.stdout.strip().split() if is_running else []
 
     print("==================================================")
-    print("         PHOENIX COSMIC PANEL APPLET STATUS       ")
+    print("      WORKSPACE LAYOUTS PANEL APPLET STATUS       ")
     print("==================================================")
+    print(f"  Title                : Workspace Layouts")
     print(f"  Panel Configuration  : {'Registered' if is_installed else 'Not Registered'}")
     print(f"  Applet Processes     : {'Running (' + str(len(pids)) + ' instances)' if is_running else 'Not Running'}")
     if pids:
         print(f"    └─ Active PIDs     : {', '.join(pids)}")
-    print(f"  Symbolic Icon        : ~/.local/share/icons/hicolor/scalable/status/phoenix-profile-symbolic.svg")
-    print(f"  Color Icon           : ~/.local/share/icons/hicolor/scalable/apps/phoenix-profile.svg")
-    print(f"  Desktop Applet       : ~/.local/share/applications/com.phoenix.CosmicPanelProfileButton.desktop")
+    print(f"  Symbolic Icon        : ~/.local/share/icons/hicolor/scalable/status/workspace-layouts-symbolic.svg")
+    print(f"  Monochrome Icon      : ~/.local/share/icons/hicolor/scalable/apps/workspace-layouts.svg")
+    print(f"  Desktop Applet       : ~/.local/share/applications/com.system76.CosmicPanelLayoutsButton.desktop")
     print("==================================================")
 
 def cmd_applet_install(args):
     """Installs icons, desktop files, and registers the applet on the COSMIC panel."""
-    print("Installing Phoenix COSMIC Panel Applet...")
+    print("Installing Workspace Layouts COSMIC Panel Applet...")
     
     # 1. Generate icons
     gen_py = os.path.join(BIN_DIR, "generate_icons.py")
     subprocess.run([sys.executable, gen_py], check=True)
 
-    # 2. Install desktop files from resources
+    # 2. Configure cosmic-panel-button to force icon presentation on panels
+    p_btn_dir = os.path.expanduser("~/.config/cosmic/com.system76.CosmicPanelButton/v1")
+    os.makedirs(p_btn_dir, exist_ok=True)
+    with open(os.path.join(p_btn_dir, "configs"), "w") as f:
+        f.write('{\n    "Panel": (\n        force_presentation: Some(Icon),\n    ),\n    "Dock": (\n        force_presentation: Some(Icon),\n    ),\n}\n')
+
+    # 3. Install desktop files from resources
     res_dir = os.path.join(os.path.dirname(BIN_DIR), "resources")
     app_dir = os.path.expanduser("~/.local/share/applications")
     os.makedirs(app_dir, exist_ok=True)
 
-    for df in ["com.phoenix.CosmicAppletProfile.desktop", "com.phoenix.CosmicPanelProfileButton.desktop", "com.phoenix.PhoenixProfileManager.desktop"]:
+    desktop_files = [
+        "com.system76.CosmicAppletWorkspaceLayouts.desktop",
+        "com.system76.CosmicPanelLayoutsButton.desktop",
+        "com.system76.CosmicWorkspaceLayouts.desktop"
+    ]
+    for df in desktop_files:
         src = os.path.join(res_dir, df)
         dst = os.path.join(app_dir, df)
         if os.path.exists(src):
@@ -284,16 +297,19 @@ def cmd_applet_install(args):
 
     subprocess.run(["update-desktop-database", app_dir], check=False)
 
-    # 3. Add to plugins_wings if not already present
+    # 4. Add to plugins_wings if not already present
     wings_file = os.path.expanduser("~/.config/cosmic/com.system76.CosmicPanel.Panel/v1/plugins_wings")
     if os.path.exists(wings_file):
         with open(wings_file, "r") as f:
             content = f.read()
-        if "com.phoenix.CosmicPanelProfileButton" not in content:
-            # Insert into left wing
+        if "com.system76.CosmicPanelLayoutsButton" not in content:
+            # Clean up old ID if present
+            content = content.replace('"com.phoenix.CosmicPanelProfileButton",\n', '')
+            content = content.replace('"com.phoenix.CosmicPanelProfileButton",', '')
+            # Insert new formal ID into left wing
             new_content = content.replace(
                 '"io.github.crocodile.cosmic-ext-applet-workspace-icons",',
-                '"io.github.crocodile.cosmic-ext-applet-workspace-icons",\n    "com.phoenix.CosmicPanelProfileButton",'
+                '"io.github.crocodile.cosmic-ext-applet-workspace-icons",\n    "com.system76.CosmicPanelLayoutsButton",'
             )
             with open(wings_file, "w") as f:
                 f.write(new_content)
@@ -301,7 +317,7 @@ def cmd_applet_install(args):
         else:
             print("Applet already registered in panel configuration.")
 
-    print("\n✓ Phoenix panel applet successfully installed and active!")
+    print("\n✓ Workspace Layouts panel applet successfully installed and active!")
 
 def cmd_applet_uninstall(args):
     """Unregisters the applet from the COSMIC panel."""
@@ -309,15 +325,14 @@ def cmd_applet_uninstall(args):
     if os.path.exists(wings_file):
         with open(wings_file, "r") as f:
             content = f.read()
-        if "com.phoenix.CosmicPanelProfileButton" in content:
-            new_content = content.replace('    "com.phoenix.CosmicPanelProfileButton",\n', '')
-            new_content = new_content.replace('"com.phoenix.CosmicPanelProfileButton",', '')
-            with open(wings_file, "w") as f:
-                f.write(new_content)
-            print(f"Removed applet from: {wings_file}")
-        else:
-            print("Applet was not registered in panel configuration.")
-    print("✓ Phoenix panel applet uninstalled from panel.")
+        for old_id in ["com.system76.CosmicPanelLayoutsButton", "com.phoenix.CosmicPanelProfileButton"]:
+            if old_id in content:
+                content = content.replace(f'    "{old_id}",\n', '')
+                content = content.replace(f'"{old_id}",', '')
+        with open(wings_file, "w") as f:
+            f.write(content)
+        print(f"Removed applet from: {wings_file}")
+    print("✓ Workspace Layouts panel applet uninstalled from panel.")
 
 def main():
     parser = argparse.ArgumentParser(

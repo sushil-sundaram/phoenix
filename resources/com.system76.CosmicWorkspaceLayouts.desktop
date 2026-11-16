@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Workspace Layouts
+Comment=Manage and switch COSMIC desktop window layouts and display profiles
+Type=Application
+Exec=/home/sushil-s/phoenix/bin/phoenix-popup
+Terminal=false
+Categories=Utility;Settings;DesktopSettings;
+Icon=workspace-layouts
+StartupNotify=true
+Keywords=COSMIC;Workspaces;Profiles;Layout;Display;Monitor;Session;

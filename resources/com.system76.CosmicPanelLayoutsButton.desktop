@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Workspace Layouts
+Comment=Switch COSMIC desktop layouts and display profiles
+Type=Application
+Exec=cosmic-panel-button com.system76.CosmicAppletWorkspaceLayouts
+Terminal=false
+Categories=COSMIC;Utility;
+Icon=workspace-layouts-symbolic
+StartupNotify=false
+NoDisplay=true
+X-CosmicApplet=true
+X-HostWaylandDisplay=true
+X-OverflowPriority=5
+X-OverflowMinSize=8

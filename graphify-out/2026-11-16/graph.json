@@ -4,6 +4,19 @@
   "graph": {},
   "nodes": [
     {
+      "label": "PhoenixProfilePopup",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L83",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": "phoenixprofilepopup"
+    },
+    {
       "label": "capture_session()",
       "file_type": "code",
       "source_file": "bin/cosmic-session-saver.py",
@@ -50,6 +63,54 @@
       "community": 11,
       "community_name": "cosmic-session-saver.py",
       "norm_label": "save_session()"
+    },
+    {
+      "label": "cmd_applet_install()",
+      "file_type": "code",
+      "source_file": "bin/phoenix",
+      "source_location": "L265",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_cmd_applet_install",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "cmd_applet_install()"
+    },
+    {
+      "label": "cmd_applet_status()",
+      "file_type": "code",
+      "source_file": "bin/phoenix",
+      "source_location": "L241",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_cmd_applet_status",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "cmd_applet_status()"
+    },
+    {
+      "label": "cmd_applet_uninstall()",
+      "file_type": "code",
+      "source_file": "bin/phoenix",
+      "source_location": "L306",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_cmd_applet_uninstall",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "cmd_applet_uninstall()"
+    },
+    {
+      "label": "cmd_popup()",
+      "file_type": "code",
+      "source_file": "bin/phoenix",
+      "source_location": "L233",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_cmd_popup",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "cmd_popup()"
     },
     {
       "label": "cmd_profile_add()",
@@ -151,13 +212,229 @@
       "label": "main()",
       "file_type": "code",
       "source_file": "bin/phoenix",
-      "source_location": "L233",
+      "source_location": "L322",
       "_callable": true,
       "_origin": "ast",
       "id": "bin_phoenix_main",
       "community": 12,
       "community_name": "phoenix",
       "norm_label": "main()"
+    },
+    {
+      "label": "check_single_instance_toggle()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L462",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_check_single_instance_toggle",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": "check_single_instance_toggle()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L479",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_main",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": "main()"
+    },
+    {
+      "label": ".build_footer()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L357",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_build_footer",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".build_footer()"
+    },
+    {
+      "label": ".build_header()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L172",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_build_header",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".build_header()"
+    },
+    {
+      "label": ".build_profile_row()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L289",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_build_profile_row",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".build_profile_row()"
+    },
+    {
+      "label": ".create_window()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L91",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".create_window()"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L84",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_init",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".on_auto_detect_clicked()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L395",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_auto_detect_clicked()"
+    },
+    {
+      "label": ".on_key_pressed()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L166",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_key_pressed",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_key_pressed()"
+    },
+    {
+      "label": ".on_new_profile_dialog()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L411",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_new_profile_dialog",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_new_profile_dialog()"
+    },
+    {
+      "label": ".on_restore_windows()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L404",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_restore_windows",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_restore_windows()"
+    },
+    {
+      "label": ".on_save_profile()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L390",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_save_profile",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_save_profile()"
+    },
+    {
+      "label": ".on_switch_profile()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L383",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".on_switch_profile()"
+    },
+    {
+      "label": ".refresh_hardware_card()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L212",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_refresh_hardware_card",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".refresh_hardware_card()"
+    },
+    {
+      "label": ".refresh_profiles_list()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L269",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".refresh_profiles_list()"
+    },
+    {
+      "label": ".show_notification()",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L458",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": ".show_notification()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L129",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_generate_icons_main",
+      "community": 18,
+      "community_name": "generate_icons.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "render_svg_to_png()",
+      "file_type": "code",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L116",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "bin_generate_icons_render_svg_to_png",
+      "community": 18,
+      "community_name": "generate_icons.py",
+      "norm_label": "render_svg_to_png()"
     },
     {
       "label": "detect_profile()",
@@ -471,6 +748,28 @@
       "norm_label": "arc"
     },
     {
+      "label": "Drop",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "drop",
+      "community": 0,
+      "community_name": "server.rs",
+      "norm_label": "drop"
+    },
+    {
+      "label": "JoinHandle",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "joinhandle",
+      "community": 0,
+      "community_name": "server.rs",
+      "norm_label": "joinhandle"
+    },
+    {
       "label": "server.rs",
       "file_type": "code",
       "source_file": "src/cos-cli/src/server.rs",
@@ -777,6 +1076,39 @@
       "community": 0,
       "community_name": "server.rs",
       "norm_label": "stateparams"
+    },
+    {
+      "label": "TaskGuard",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/server.rs",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_server_taskguard",
+      "community": 0,
+      "community_name": "server.rs",
+      "norm_label": "taskguard"
+    },
+    {
+      "label": ".drop()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/server.rs",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_server_taskguard_drop",
+      "community": 0,
+      "community_name": "server.rs",
+      "norm_label": ".drop()"
+    },
+    {
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/server.rs",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_server_taskguard_new",
+      "community": 0,
+      "community_name": "server.rs",
+      "norm_label": ".new()"
     },
     {
       "label": "WaylandThread",
@@ -1178,7 +1510,7 @@
       "label": "1. Ensure Scripts are Executable and Symlinked",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L98",
+      "source_location": "L109",
       "_origin": "ast",
       "id": "readme_1_ensure_scripts_are_executable_and_symlinked",
       "community": 10,
@@ -1189,7 +1521,7 @@
       "label": "2. Autostart Restorer",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L107",
+      "source_location": "L118",
       "_origin": "ast",
       "id": "readme_2_autostart_restorer",
       "community": 10,
@@ -1200,7 +1532,7 @@
       "label": "3. Periodic and Shutdown Systemd Services",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L120",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "readme_3_periodic_and_shutdown_systemd_services",
       "community": 10,
@@ -1208,10 +1540,21 @@
       "norm_label": "3. periodic and shutdown systemd services"
     },
     {
+      "label": "4. Install the COSMIC Panel Applet",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L140",
+      "_origin": "ast",
+      "id": "readme_4_install_the_cosmic_panel_applet",
+      "community": 10,
+      "community_name": "Phoenix: COSMIC Session Restorer & Profile Manager",
+      "norm_label": "4. install the cosmic panel applet"
+    },
+    {
       "label": "Architecture",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L15",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "readme_architecture",
       "community": 10,
@@ -1244,7 +1587,7 @@
       "label": "Profile Configuration (`~/.config/cosmic/profiles.json`)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L53",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "readme_profile_configuration_config_cosmic_profiles_json",
       "community": 10,
@@ -1255,7 +1598,7 @@
       "label": "Quick CLI Reference",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L25",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "readme_quick_cli_reference",
       "community": 10,
@@ -1266,7 +1609,7 @@
       "label": "Setup Instructions",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L94",
+      "source_location": "L105",
       "_origin": "ast",
       "id": "readme_setup_instructions",
       "community": 10,
@@ -1362,6 +1705,17 @@
       "norm_label": "opens profiles.json in system editor."
     },
     {
+      "label": "Opens or toggles the Phoenix profile popup switcher.",
+      "file_type": "rationale",
+      "source_file": "bin/phoenix",
+      "source_location": "L234",
+      "_origin": "ast",
+      "id": "bin_phoenix_rationale_234",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "opens or toggles the phoenix profile popup switcher."
+    },
+    {
       "label": "Displays comprehensive Phoenix status including profiles, environment, and\u2026",
       "file_type": "rationale",
       "source_file": "bin/phoenix",
@@ -1371,6 +1725,39 @@
       "community": 12,
       "community_name": "phoenix",
       "norm_label": "displays comprehensive phoenix status including profiles, environment, and..."
+    },
+    {
+      "label": "Checks the status of the COSMIC panel applet.",
+      "file_type": "rationale",
+      "source_file": "bin/phoenix",
+      "source_location": "L242",
+      "_origin": "ast",
+      "id": "bin_phoenix_rationale_242",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "checks the status of the cosmic panel applet."
+    },
+    {
+      "label": "Installs icons, desktop files, and registers the applet on the COSMIC panel.",
+      "file_type": "rationale",
+      "source_file": "bin/phoenix",
+      "source_location": "L266",
+      "_origin": "ast",
+      "id": "bin_phoenix_rationale_266",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "installs icons, desktop files, and registers the applet on the cosmic panel."
+    },
+    {
+      "label": "Unregisters the applet from the COSMIC panel.",
+      "file_type": "rationale",
+      "source_file": "bin/phoenix",
+      "source_location": "L307",
+      "_origin": "ast",
+      "id": "bin_phoenix_rationale_307",
+      "community": 12,
+      "community_name": "phoenix",
+      "norm_label": "unregisters the applet from the cosmic panel."
     },
     {
       "label": "Lists all configured profiles with their detection rules and snapshot status.",
@@ -1398,59 +1785,433 @@
       "norm_label": "cos-cli"
     },
     {
-      "label": "Drop",
+      "label": "phoenix-popup",
+      "file_type": "code",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bin_phoenix_popup",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": "phoenix-popup"
+    },
+    {
+      "label": "If already running, toggle by sending SIGTERM or closing.",
+      "file_type": "rationale",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L463",
+      "_origin": "ast",
+      "id": "bin_phoenix_popup_rationale_463",
+      "community": 14,
+      "community_name": "PhoenixProfilePopup",
+      "norm_label": "if already running, toggle by sending sigterm or closing."
+    },
+    {
+      "label": "main.rs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "main.rs"
+    },
+    {
+      "label": "ActivateArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L425",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_activateargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "activateargs"
+    },
+    {
+      "label": "ActivateWsArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L431",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_activatewsargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "activatewsargs"
+    },
+    {
+      "label": "AppFinderArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L457",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_appfinderargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "appfinderargs"
+    },
+    {
+      "label": "CloseArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L452",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_closeargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "closeargs"
+    },
+    {
+      "label": ".app_id()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L496",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_closeargs_app_id",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_id()"
+    },
+    {
+      "label": ".app_index()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L492",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_closeargs_app_index",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_index()"
+    },
+    {
+      "label": ".wait()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L500",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_closeargs_wait",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".wait()"
+    },
+    {
+      "label": "Command",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L511",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_command",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "command"
+    },
+    {
+      "label": "InfoArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L506",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_infoargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "infoargs"
+    },
+    {
+      "label": "MoveArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L415",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "moveargs"
+    },
+    {
+      "label": ".app_id()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L468",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_app_id",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_id()"
+    },
+    {
+      "label": ".app_index()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L464",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_app_index",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_index()"
+    },
+    {
+      "label": ".wait()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L472",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_moveargs_wait",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".wait()"
+    },
+    {
+      "label": "Option",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "drop",
-      "community": 14,
-      "community_name": "TaskGuard",
-      "norm_label": "drop"
+      "id": "src_cos_cli_src_main_rs_option",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "option"
     },
     {
-      "label": "JoinHandle",
+      "label": "StateArgs",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L437",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": "stateargs"
+    },
+    {
+      "label": ".app_id()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L482",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_app_id",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_id()"
+    },
+    {
+      "label": ".app_index()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L478",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_app_index",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".app_index()"
+    },
+    {
+      "label": ".wait()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L486",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_stateargs_wait",
+      "community": 15,
+      "community_name": "main.rs",
+      "norm_label": ".wait()"
+    },
+    {
+      "label": "From",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "joinhandle",
-      "community": 14,
-      "community_name": "TaskGuard",
-      "norm_label": "joinhandle"
+      "id": "from",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "from"
     },
     {
-      "label": "TaskGuard",
+      "label": "App",
       "file_type": "code",
-      "source_file": "src/cos-cli/src/server.rs",
-      "source_location": "L15",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L208",
       "_origin": "ast",
-      "id": "src_cos_cli_src_server_taskguard",
-      "community": 14,
-      "community_name": "TaskGuard",
-      "norm_label": "taskguard"
+      "id": "src_cos_cli_src_main_app",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "app"
     },
     {
-      "label": ".drop()",
+      "label": "JsonApp",
       "file_type": "code",
-      "source_file": "src/cos-cli/src/server.rs",
-      "source_location": "L28",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L218",
       "_origin": "ast",
-      "id": "src_cos_cli_src_server_taskguard_drop",
-      "community": 14,
-      "community_name": "TaskGuard",
-      "norm_label": ".drop()"
+      "id": "src_cos_cli_src_main_jsonapp",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonapp"
     },
     {
-      "label": ".new()",
+      "label": "JsonInfo",
       "file_type": "code",
-      "source_file": "src/cos-cli/src/server.rs",
-      "source_location": "L20",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L266",
       "_origin": "ast",
-      "id": "src_cos_cli_src_server_taskguard_new",
-      "community": 14,
-      "community_name": "TaskGuard",
-      "norm_label": ".new()"
+      "id": "src_cos_cli_src_main_jsoninfo",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsoninfo"
+    },
+    {
+      "label": "JsonOutput",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L254",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonoutput",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonoutput"
+    },
+    {
+      "label": "JsonOutputRef",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L228",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonoutputref",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonoutputref"
+    },
+    {
+      "label": "JsonSeat",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L260",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonseat",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonseat"
+    },
+    {
+      "label": "JsonWorkspace",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L241",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonworkspace",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonworkspace"
+    },
+    {
+      "label": "JsonWorkspaceGroup",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L247",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonworkspacegroup",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonworkspacegroup"
+    },
+    {
+      "label": "JsonWorkspaceRef",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L234",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_jsonworkspaceref",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "jsonworkspaceref"
+    },
+    {
+      "label": "String",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_string",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "string"
+    },
+    {
+      "label": "Vec",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_vec",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "vec"
+    },
+    {
+      "label": "ZcosmicToplevelHandleV1",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_rs_zcosmictoplevelhandlev1",
+      "community": 16,
+      "community_name": "String",
+      "norm_label": "zcosmictoplevelhandlev1"
+    },
+    {
+      "label": "NamedHandle",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle",
+      "community": 17,
+      "community_name": "NamedHandle",
+      "norm_label": "namedhandle"
+    },
+    {
+      "label": "NamedHandle<T>",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L134",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle_t",
+      "community": 17,
+      "community_name": "NamedHandle",
+      "norm_label": "namedhandle<t>"
+    },
+    {
+      "label": ".named()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_namedhandle_t_named",
+      "community": 17,
+      "community_name": "NamedHandle",
+      "norm_label": ".named()"
+    },
+    {
+      "label": "T",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "t",
+      "community": 17,
+      "community_name": "NamedHandle",
+      "norm_label": "t"
+    },
+    {
+      "label": "generate_icons.py",
+      "file_type": "code",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bin_generate_icons",
+      "community": 18,
+      "community_name": "generate_icons.py",
+      "norm_label": "generate_icons.py"
     },
     {
       "label": "Dispatch",
@@ -1867,7 +2628,7 @@
       "_origin": "ast",
       "id": "hashmap",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "hashmap"
     },
     {
@@ -1878,7 +2639,7 @@
       "_origin": "ast",
       "id": "item",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "item"
     },
     {
@@ -1889,7 +2650,7 @@
       "_origin": "ast",
       "id": "iterator",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "iterator"
     },
     {
@@ -1900,63 +2661,8 @@
       "_origin": "ast",
       "id": "objectid",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "objectid"
-    },
-    {
-      "label": "main.rs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "main.rs"
-    },
-    {
-      "label": "ActivateArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L425",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_activateargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "activateargs"
-    },
-    {
-      "label": "ActivateWsArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L431",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_activatewsargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "activatewsargs"
-    },
-    {
-      "label": "App",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L208",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_app",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "app"
-    },
-    {
-      "label": "AppFinderArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L457",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_appfinderargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "appfinderargs"
     },
     {
       "label": "AppState",
@@ -1966,7 +2672,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appstate",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "appstate"
     },
     {
@@ -1977,8 +2683,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appstate_enable_notify",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": ".enable_notify()"
+    },
+    {
+      "label": ".entities_count()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L190",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_appstate_entities_count",
+      "community": 4,
+      "community_name": "AppState",
+      "norm_label": ".entities_count()"
     },
     {
       "label": ".notify()",
@@ -1988,74 +2705,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appstate_notify",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": ".notify()"
-    },
-    {
-      "label": "CloseArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L452",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_closeargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "closeargs"
-    },
-    {
-      "label": ".app_id()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L496",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_closeargs_app_id",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_id()"
-    },
-    {
-      "label": ".app_index()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L492",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_closeargs_app_index",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_index()"
-    },
-    {
-      "label": ".wait()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L500",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_closeargs_wait",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".wait()"
-    },
-    {
-      "label": "Command",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L511",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_command",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "command"
-    },
-    {
-      "label": "find_apps()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L521",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_find_apps",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "find_apps()"
     },
     {
       "label": "HandleMap",
@@ -2065,7 +2716,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_handlemap",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "handlemap"
     },
     {
@@ -2076,41 +2727,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_handlemap_workspace_names",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": ".workspace_names()"
-    },
-    {
-      "label": "InfoArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L506",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_infoargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "infoargs"
-    },
-    {
-      "label": "JsonApp",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L218",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonapp",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonapp"
-    },
-    {
-      "label": "JsonInfo",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L266",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsoninfo",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsoninfo"
     },
     {
       "label": ".from()",
@@ -2120,151 +2738,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_jsoninfo_from",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": ".from()"
-    },
-    {
-      "label": "JsonOutput",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L254",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonoutput",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonoutput"
-    },
-    {
-      "label": "JsonOutputRef",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L228",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonoutputref",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonoutputref"
-    },
-    {
-      "label": "JsonSeat",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L260",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonseat",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonseat"
-    },
-    {
-      "label": "JsonWorkspace",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L241",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonworkspace",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonworkspace"
-    },
-    {
-      "label": "JsonWorkspaceGroup",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L247",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonworkspacegroup",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonworkspacegroup"
-    },
-    {
-      "label": "JsonWorkspaceRef",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L234",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_jsonworkspaceref",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "jsonworkspaceref"
-    },
-    {
-      "label": "MoveArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L415",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "moveargs"
-    },
-    {
-      "label": ".app_id()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L468",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_app_id",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_id()"
-    },
-    {
-      "label": ".app_index()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L464",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_app_index",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_index()"
-    },
-    {
-      "label": ".wait()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L472",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_moveargs_wait",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".wait()"
-    },
-    {
-      "label": "NamedHandle",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "namedhandle"
-    },
-    {
-      "label": "NamedHandle<T>",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L134",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle_t",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "namedhandle<t>"
-    },
-    {
-      "label": ".named()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L138",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_namedhandle_t_named",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".named()"
     },
     {
       "label": "ExtWorkspaceGroupHandleV1",
@@ -2274,7 +2749,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_extworkspacegrouphandlev1",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "extworkspacegrouphandlev1"
     },
     {
@@ -2285,7 +2760,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_extworkspacehandlev1",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "extworkspacehandlev1"
     },
     {
@@ -2296,19 +2771,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_extworkspacemanagerv1",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "extworkspacemanagerv1"
-    },
-    {
-      "label": "Option",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_option",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "option"
     },
     {
       "label": "Receiver",
@@ -2318,7 +2782,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_receiver",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "receiver"
     },
     {
@@ -2329,30 +2793,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_sender",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "sender"
-    },
-    {
-      "label": "String",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_string",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "string"
-    },
-    {
-      "label": "Vec",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_vec",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "vec"
     },
     {
       "label": "WlOutput",
@@ -2362,7 +2804,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_wloutput",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "wloutput"
     },
     {
@@ -2373,19 +2815,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_wlseat",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "wlseat"
-    },
-    {
-      "label": "ZcosmicToplevelHandleV1",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_rs_zcosmictoplevelhandlev1",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "zcosmictoplevelhandlev1"
     },
     {
       "label": "ZcosmicToplevelManagerV1",
@@ -2395,63 +2826,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_zcosmictoplevelmanagerv1",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "zcosmictoplevelmanagerv1"
-    },
-    {
-      "label": "State",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L382",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_state",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "state"
-    },
-    {
-      "label": "StateArgs",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L437",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "stateargs"
-    },
-    {
-      "label": ".app_id()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L482",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_app_id",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_id()"
-    },
-    {
-      "label": ".app_index()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L478",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_app_index",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".app_index()"
-    },
-    {
-      "label": ".wait()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L486",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_stateargs_wait",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": ".wait()"
     },
     {
       "label": "WorkspaceGroup",
@@ -2461,30 +2837,8 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_workspacegroup",
       "community": 4,
-      "community_name": "main.rs",
+      "community_name": "AppState",
       "norm_label": "workspacegroup"
-    },
-    {
-      "label": "T",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "t",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "t"
-    },
-    {
-      "label": "TryFrom",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "tryfrom",
-      "community": 4,
-      "community_name": "main.rs",
-      "norm_label": "tryfrom"
     },
     {
       "label": "Debug",
@@ -2494,7 +2848,7 @@
       "_origin": "ast",
       "id": "debug",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "debug"
     },
     {
@@ -2505,7 +2859,7 @@
       "_origin": "ast",
       "id": "display",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "display"
     },
     {
@@ -2516,30 +2870,8 @@
       "_origin": "ast",
       "id": "formatter",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "formatter"
-    },
-    {
-      "label": "From",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "id": "from",
-      "community": 5,
-      "community_name": "CliError",
-      "norm_label": "from"
-    },
-    {
-      "label": ".entities_count()",
-      "file_type": "code",
-      "source_file": "src/cos-cli/src/main.rs",
-      "source_location": "L190",
-      "_origin": "ast",
-      "id": "src_cos_cli_src_main_appstate_entities_count",
-      "community": 5,
-      "community_name": "CliError",
-      "norm_label": ".entities_count()"
     },
     {
       "label": ".new()",
@@ -2549,7 +2881,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_appstate_new",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".new()"
     },
     {
@@ -2560,7 +2892,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_clierror",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "clierror"
     },
     {
@@ -2571,7 +2903,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_clierror_description",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".description()"
     },
     {
@@ -2582,7 +2914,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_clierror_fmt",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".fmt()"
     },
     {
@@ -2593,7 +2925,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_clierror_from",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".from()"
     },
     {
@@ -2604,7 +2936,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_clierror_new",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".new()"
     },
     {
@@ -2615,8 +2947,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_discover",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "discover()"
+    },
+    {
+      "label": "find_apps()",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L521",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_find_apps",
+      "community": 5,
+      "community_name": "find_apps",
+      "norm_label": "find_apps()"
     },
     {
       "label": "init_tracing()",
@@ -2626,7 +2969,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_init_tracing",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "init_tracing()"
     },
     {
@@ -2637,7 +2980,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_main",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "main()"
     },
     {
@@ -2648,7 +2991,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_box",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "box"
     },
     {
@@ -2659,7 +3002,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_connection",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "connection"
     },
     {
@@ -2670,7 +3013,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_error",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "error"
     },
     {
@@ -2681,7 +3024,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_eventqueue",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "eventqueue"
     },
     {
@@ -2692,7 +3035,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_result",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "result"
     },
     {
@@ -2703,8 +3046,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_rs_self",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": "self"
+    },
+    {
+      "label": "State",
+      "file_type": "code",
+      "source_file": "src/cos-cli/src/main.rs",
+      "source_location": "L382",
+      "_origin": "ast",
+      "id": "src_cos_cli_src_main_state",
+      "community": 5,
+      "community_name": "find_apps",
+      "norm_label": "state"
     },
     {
       "label": ".fmt()",
@@ -2714,7 +3068,7 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_state_fmt",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".fmt()"
     },
     {
@@ -2725,8 +3079,19 @@
       "_origin": "ast",
       "id": "src_cos_cli_src_main_state_try_from",
       "community": 5,
-      "community_name": "CliError",
+      "community_name": "find_apps",
       "norm_label": ".try_from()"
+    },
+    {
+      "label": "TryFrom",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "tryfrom",
+      "community": 5,
+      "community_name": "find_apps",
+      "norm_label": "tryfrom"
     },
     {
       "label": "rules/graphify.md",
@@ -3104,6 +3469,246 @@
       "_origin": "ast",
       "source": "bin_cosmic_session_saver_save_session",
       "target": "bin_cosmic_session_saver_capture_session",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_generate_icons_main",
+      "target": "bin_generate_icons_render_svg_to_png",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L481",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_main",
+      "target": "bin_phoenix_popup_check_single_instance_toggle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L501",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_main",
+      "target": "bin_phoenix_popup_phoenixprofilepopup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L328",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_build_profile_row",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L334",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_build_profile_row",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_save_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L119",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_header",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L135",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_hardware_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L150",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L157",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_footer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L398",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L400",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L401",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_hardware_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L402",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L409",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_restore_windows",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L392",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_save_profile",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L393",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_save_profile",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L386",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L387",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_hardware_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L388",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L283",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_profile_row",
       "confidence_score": 1.0
     },
     {
@@ -5531,6 +6136,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup",
+      "target": "bin_phoenix_profile",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
       "source_file": "src/cos-cli/src/main.rs",
@@ -6715,6 +7332,28 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_generate_icons",
+      "target": "bin_generate_icons_render_svg_to_png",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/generate_icons.py",
+      "source_location": "L129",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_generate_icons",
+      "target": "bin_generate_icons_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "bin/phoenix",
       "source_location": "L115",
       "weight": 1.0,
@@ -6797,6 +7436,50 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix",
+      "target": "bin_phoenix_cmd_popup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L241",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix",
+      "target": "bin_phoenix_cmd_applet_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L265",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix",
+      "target": "bin_phoenix_cmd_applet_install",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L306",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix",
+      "target": "bin_phoenix_cmd_applet_uninstall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L322",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix",
       "target": "bin_phoenix_main",
       "confidence_score": 1.0
     },
@@ -6809,6 +7492,39 @@
       "_origin": "ast",
       "source": "bin_phoenix",
       "target": "bin_phoenix_cmd_profile_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L462",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup",
+      "target": "bin_phoenix_popup_check_single_instance_toggle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L479",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup",
+      "target": "bin_phoenix_popup_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup",
       "confidence_score": 1.0
     },
     {
@@ -6980,7 +7696,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L15",
+      "source_location": "L105",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_phoenix_cosmic_session_restorer_profile_manager",
+      "target": "readme_setup_instructions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_phoenix_cosmic_session_restorer_profile_manager",
@@ -6991,7 +7718,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L25",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_phoenix_cosmic_session_restorer_profile_manager",
@@ -7013,7 +7740,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L53",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_phoenix_cosmic_session_restorer_profile_manager",
@@ -7024,18 +7751,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L94",
+      "source_location": "L109",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_phoenix_cosmic_session_restorer_profile_manager",
-      "target": "readme_setup_instructions",
+      "source": "readme_setup_instructions",
+      "target": "readme_1_ensure_scripts_are_executable_and_symlinked",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L107",
+      "source_location": "L118",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_setup_instructions",
@@ -7046,7 +7773,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L120",
+      "source_location": "L131",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_setup_instructions",
@@ -7057,11 +7784,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L98",
+      "source_location": "L140",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_setup_instructions",
-      "target": "readme_1_ensure_scripts_are_executable_and_symlinked",
+      "target": "readme_4_install_the_cosmic_panel_applet",
       "confidence_score": 1.0
     },
     {
@@ -7925,6 +8652,160 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_key_pressed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L172",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_header",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L212",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_hardware_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L269",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_refresh_profiles_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L289",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_profile_row",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L357",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_build_footer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L383",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_switch_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L390",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_save_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L395",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_auto_detect_clicked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L404",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_restore_windows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L411",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_on_new_profile_dialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L458",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_show_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_phoenixprofilepopup",
+      "target": "bin_phoenix_popup_phoenixprofilepopup_create_window",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
       "source_file": "src/cos-cli/src/main.rs",
       "source_location": "L186",
       "weight": 1.0,
@@ -8332,6 +9213,17 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix-popup",
+      "source_location": "L463",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_popup_rationale_463",
+      "target": "bin_phoenix_popup_check_single_instance_toggle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "bin/phoenix_profile.py",
       "source_location": "L116",
       "weight": 1.0,
@@ -8542,11 +9434,55 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "bin/phoenix",
+      "source_location": "L234",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_rationale_234",
+      "target": "bin_phoenix_cmd_popup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_rationale_24",
       "target": "bin_phoenix_cmd_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L242",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_rationale_242",
+      "target": "bin_phoenix_cmd_applet_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L266",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_rationale_266",
+      "target": "bin_phoenix_cmd_applet_install",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/phoenix",
+      "source_location": "L307",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_rationale_307",
+      "target": "bin_phoenix_cmd_applet_uninstall",
       "confidence_score": 1.0
     },
     {
@@ -8576,7 +9512,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L242",
+      "source_location": "L331",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8588,7 +9524,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L247",
+      "source_location": "L336",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8600,7 +9536,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L252",
+      "source_location": "L341",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8612,7 +9548,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L260",
+      "source_location": "L349",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8624,7 +9560,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L264",
+      "source_location": "L353",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8636,7 +9572,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L270",
+      "source_location": "L359",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8648,7 +9584,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L287",
+      "source_location": "L376",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
@@ -8660,14 +9596,62 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "bin/phoenix",
-      "source_location": "L291",
+      "source_location": "L380",
       "weight": 1.0,
       "_origin": "ast",
       "source": "bin_phoenix_main",
       "target": "bin_phoenix_cmd_profile_edit",
       "confidence_score": 0.5
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "bin/phoenix",
+      "source_location": "L384",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_main",
+      "target": "bin_phoenix_cmd_popup",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "bin/phoenix",
+      "source_location": "L391",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_main",
+      "target": "bin_phoenix_cmd_applet_status",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "bin/phoenix",
+      "source_location": "L394",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_main",
+      "target": "bin_phoenix_cmd_applet_install",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "bin/phoenix",
+      "source_location": "L397",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bin_phoenix_main",
+      "target": "bin_phoenix_cmd_applet_uninstall",
+      "confidence_score": 0.5
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0b2646de28ca8ee4398c941f019cea6dad635e8f"
+  "built_at_commit": "a698964ad53a7488ccb140c927dddb0be597d431"
 }

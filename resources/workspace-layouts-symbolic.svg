@@ -1,0 +1,8 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left Master Layout Pane -->
+  <rect x="1.5" y="2" width="5.5" height="12" rx="1.2" fill="currentColor"/>
+  <!-- Top Right Layout Pane -->
+  <rect x="8.5" y="2" width="6" height="5.2" rx="1.2" fill="currentColor"/>
+  <!-- Bottom Right Layout Pane -->
+  <rect x="8.5" y="8.8" width="6" height="5.2" rx="1.2" stroke="currentColor" stroke-width="1.2" fill="currentColor" fill-opacity="0.2"/>
+</svg>

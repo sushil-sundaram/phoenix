@@ -1,16 +1,16 @@
 # Graph Report - phoenix  (2026-11-16)
 
 ## Corpus Check
-- 15 files · ~13,332 words
+- 17 files · ~16,610 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 256 nodes · 498 edges · 15 communities (12 shown, 3 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.5)
+- 287 nodes · 552 edges · 19 communities (15 shown, 4 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0b2646de`
+- Built from commit: `a698964a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,8 +19,8 @@
 - Commands
 - .event
 - phoenix_profile.py
-- main.rs
-- CliError
+- AppState
+- find_apps
 - rules/graphify.md
 - cosmic-session-restorer.py
 - workflows/graphify.md
@@ -29,7 +29,11 @@
 - cosmic-session-saver.py
 - phoenix
 - cos-cli
-- TaskGuard
+- PhoenixProfilePopup
+- main.rs
+- String
+- NamedHandle
+- generate_icons.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `AppState` - 20 edges
@@ -50,11 +54,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (15 total, 3 thin omitted)
+## Communities (19 total, 4 thin omitted)
 
 ### Community 0 - "server.rs"
-Cohesion: 0.15
-Nodes (28): Arc, ActivateParams, ActivateWsParams, BackendRequest, BackendRequestParams, BackendResponse, CloseParams, internal_error() (+20 more)
+Cohesion: 0.13
+Nodes (31): Arc, Drop, JoinHandle, ActivateParams, ActivateWsParams, BackendRequest, BackendRequestParams, BackendResponse (+23 more)
 
 ### Community 1 - "Commands"
 Cohesion: 0.08
@@ -68,13 +72,13 @@ Nodes (21): Dispatch, Event, QueueHandle, AppState, bind(), AppState, Connection
 Cohesion: 0.11
 Nodes (27): detect_profile(), get_active_wifi_ssids(), get_connected_monitors(), get_env(), get_profile_state(), get_snapshot_paths(), load_profiles_config(), Returns (monitors, models, details) Combines cosmic-randr, cos-cli, and… (+19 more)
 
-### Community 4 - "main.rs"
-Cohesion: 0.08
-Nodes (42): HashMap, Item, Iterator, ObjectId, ActivateArgs, ActivateWsArgs, App, AppFinderArgs (+34 more)
+### Community 4 - "AppState"
+Cohesion: 0.13
+Nodes (15): HashMap, Item, Iterator, ObjectId, AppState, HandleMap, ExtWorkspaceGroupHandleV1, ExtWorkspaceHandleV1 (+7 more)
 
-### Community 5 - "CliError"
-Cohesion: 0.15
-Nodes (14): Debug, Display, Formatter, From, CliError, discover(), init_tracing(), main() (+6 more)
+### Community 5 - "find_apps"
+Cohesion: 0.17
+Nodes (16): Debug, Display, Formatter, CliError, discover(), find_apps(), init_tracing(), main() (+8 more)
 
 ### Community 7 - "cosmic-session-restorer.py"
 Cohesion: 0.29
@@ -85,40 +89,52 @@ Cohesion: 0.50
 Nodes (3): PATH, cosmic-session-restore.sh script, XDG_RUNTIME_DIR
 
 ### Community 10 - "Phoenix: COSMIC Session Restorer & Profile Manager"
-Cohesion: 0.20
-Nodes (9): 1. Ensure Scripts are Executable and Symlinked, 2. Autostart Restorer, 3. Periodic and Shutdown Systemd Services, Architecture, Key Features, Phoenix: COSMIC Session Restorer & Profile Manager, Profile Configuration (`~/.config/cosmic/profiles.json`), Quick CLI Reference (+1 more)
+Cohesion: 0.18
+Nodes (10): 1. Ensure Scripts are Executable and Symlinked, 2. Autostart Restorer, 3. Periodic and Shutdown Systemd Services, 4. Install the COSMIC Panel Applet, Architecture, Key Features, Phoenix: COSMIC Session Restorer & Profile Manager, Profile Configuration (`~/.config/cosmic/profiles.json`) (+2 more)
 
 ### Community 11 - "cosmic-session-saver.py"
 Cohesion: 0.70
 Nodes (4): capture_session(), get_env(), main(), save_session()
 
 ### Community 12 - "phoenix"
-Cohesion: 0.16
-Nodes (17): cmd_profile_add(), cmd_profile_detect(), cmd_profile_edit(), cmd_profile_list(), cmd_profile_restore(), cmd_profile_save(), cmd_profile_switch(), cmd_status() (+9 more)
+Cohesion: 0.11
+Nodes (25): cmd_applet_install(), cmd_applet_status(), cmd_applet_uninstall(), cmd_popup(), cmd_profile_add(), cmd_profile_detect(), cmd_profile_edit(), cmd_profile_list() (+17 more)
 
-### Community 14 - "TaskGuard"
+### Community 14 - "PhoenixProfilePopup"
+Cohesion: 0.22
+Nodes (4): check_single_instance_toggle(), main(), PhoenixProfilePopup, If already running, toggle by sending SIGTERM or closing.
+
+### Community 15 - "main.rs"
+Cohesion: 0.23
+Nodes (9): ActivateArgs, ActivateWsArgs, AppFinderArgs, CloseArgs, Command, InfoArgs, MoveArgs, Option (+1 more)
+
+### Community 16 - "String"
+Cohesion: 0.27
+Nodes (13): From, App, JsonApp, JsonInfo, JsonOutput, JsonOutputRef, JsonSeat, JsonWorkspace (+5 more)
+
+### Community 17 - "NamedHandle"
 Cohesion: 0.50
-Nodes (3): Drop, JoinHandle, TaskGuard
+Nodes (3): NamedHandle, NamedHandle<T>, T
 
 ## Knowledge Gaps
-- **31 isolated node(s):** `cosmic-session-restore.sh script`, `XDG_RUNTIME_DIR`, `PATH`, `cos-cli`, `NamedHandle<T>` (+26 more)
+- **32 isolated node(s):** `cosmic-session-restore.sh script`, `XDG_RUNTIME_DIR`, `PATH`, `cos-cli`, `NamedHandle<T>` (+27 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `App` connect `main.rs` to `server.rs`?**
-  _High betweenness centrality (0.070) - this node is a cross-community bridge._
-- **Why does `JsonInfo` connect `main.rs` to `server.rs`, `CliError`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Why does `BackendResponse` connect `server.rs` to `main.rs`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `App` connect `String` to `server.rs`, `AppState`, `find_apps`, `main.rs`?**
+  _High betweenness centrality (0.056) - this node is a cross-community bridge._
+- **Why does `JsonInfo` connect `String` to `server.rs`, `AppState`, `main.rs`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `BackendResponse` connect `server.rs` to `String`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **What connects `cosmic-session-restore.sh script`, `XDG_RUNTIME_DIR`, `PATH` to the rest of the system?**
-  _31 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _32 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `server.rs` be split into smaller, more focused modules?**
+  _Cohesion score 0.12626262626262627 - nodes in this community are weakly interconnected._
 - **Should `Commands` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `.event` be split into smaller, more focused modules?**
   _Cohesion score 0.1422924901185771 - nodes in this community are weakly interconnected._
-- **Should `phoenix_profile.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.10846560846560846 - nodes in this community are weakly interconnected._

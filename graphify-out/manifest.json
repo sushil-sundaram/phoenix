@@ -1,110 +1,122 @@
 {
   "bin/cosmic-session-restore.sh": {
     "mtime": 1794808777.0669575,
-    "seen": 1794838640.8197374,
+    "seen": 1794840428.506455,
     "ast_hash": "3759e758a732ba0fa8f64cf33736d84b",
     "semantic_hash": ""
   },
   "bin/cosmic-session-restorer.py": {
     "mtime": 1794808766.7289798,
-    "seen": 1794838640.8197417,
+    "seen": 1794840428.5064585,
     "ast_hash": "c510495b93e38536d05c7504b6a9dc9b",
     "semantic_hash": ""
   },
   "bin/cosmic-session-saver.py": {
     "mtime": 1794808689.7451935,
-    "seen": 1794838640.819744,
+    "seen": 1794840428.5064602,
     "ast_hash": "4054adfa70b412e289ade60152a23564",
     "semantic_hash": ""
   },
   "src/cos-cli/Cargo.toml": {
     "mtime": 1789151028.1510832,
-    "seen": 1794838640.8197505,
+    "seen": 1794840428.5064645,
     "ast_hash": "eb316f45a8a51b2efddfc809a65918f9",
     "semantic_hash": ""
   },
   "src/cos-cli/src/dispatch.rs": {
     "mtime": 1789151998.9455144,
-    "seen": 1794838640.8197517,
+    "seen": 1794840428.5064652,
     "ast_hash": "94491a0d139b530b52b23fd424f6798d",
     "semantic_hash": ""
   },
   "src/cos-cli/src/main.rs": {
     "mtime": 1789185325.2979703,
-    "seen": 1794838640.8197527,
+    "seen": 1794840428.5064662,
     "ast_hash": "6c25847ae9a0586d2fa3d8f53513b72e",
     "semantic_hash": ""
   },
   "src/cos-cli/src/server.rs": {
     "mtime": 1789151028.15264,
-    "seen": 1794838640.8197536,
+    "seen": 1794840428.5064666,
     "ast_hash": "522afa298f9f3fbfbbeaf82d07bc0623",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794838635.433414,
-    "seen": 1794838640.8197567,
-    "ast_hash": "6264d6ac52f341e03540055a2b95ecd1",
+    "mtime": 1794840423.6603377,
+    "seen": 1794840428.5064683,
+    "ast_hash": "024509127d8e6edd74367364897074e4",
     "semantic_hash": ""
   },
   "src/cos-cli/JSONRPC.md": {
     "mtime": 1789151028.1510832,
-    "seen": 1794838640.8197582,
+    "seen": 1794840428.506469,
     "ast_hash": "f886d31b5d473af6a99980ce530bea92",
     "semantic_hash": ""
   },
   "src/cos-cli/README.md": {
     "mtime": 1789151028.1510832,
-    "seen": 1794838640.8197594,
+    "seen": 1794840428.5064702,
     "ast_hash": "b4c7ee51cf9cb9d5d3e45a3e2a47572a",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
     "mtime": 1789185917.2818313,
-    "seen": 1794838640.8197548,
+    "seen": 1794840428.506467,
     "ast_hash": "f1e53ecc9194573d3c28fc116c743a2e",
     "semantic_hash": ""
   },
   ".agents/workflows/graphify.md": {
     "mtime": 1789185917.281956,
-    "seen": 1794838640.8197558,
+    "seen": 1794840428.5064678,
     "ast_hash": "6d73634a678cf1e1c71930adf80bd1f0",
     "semantic_hash": ""
   },
   "bin/phoenix": {
-    "mtime": 1794838589.0965734,
-    "seen": 1794838640.8197472,
-    "ast_hash": "d915d040791b28bfd2ff44f7936f3aad",
+    "mtime": 1794840371.8795092,
+    "seen": 1794840428.5064626,
+    "ast_hash": "00259dd56c01f351ed5fa9ab2f0a1c02",
     "semantic_hash": ""
   },
   "bin/phoenix_profile.py": {
     "mtime": 1794808597.3622425,
-    "seen": 1794838640.8197496,
+    "seen": 1794840428.5064638,
     "ast_hash": "72bea8ac09644e8b1dfec49138e65653",
     "semantic_hash": ""
   },
   "bin/generate_icons.py": {
-    "mtime": 1794838286.2156148,
-    "seen": 1794838640.8197458,
-    "ast_hash": "a1696efe9c3ebd31d7b32912bae943c3",
+    "mtime": 1794840223.2330022,
+    "seen": 1794840428.5064614,
+    "ast_hash": "915bffb7f16f5b8eb3dc66bec0d1a0cb",
     "semantic_hash": ""
   },
   "bin/phoenix-popup": {
-    "mtime": 1794838449.7140527,
-    "seen": 1794838640.8197489,
-    "ast_hash": "cc278e1e0a516afea13fa74b8066e5a8",
+    "mtime": 1794840289.881781,
+    "seen": 1794840428.5064633,
+    "ast_hash": "51524d3d27fab6bacab6f646923c3e8e",
     "semantic_hash": ""
   },
   "resources/phoenix-profile-symbolic.svg": {
-    "mtime": 1794838291.351632,
-    "seen": 1794838640.81976,
-    "ast_hash": "93655d0c034281885999c9a2899a8ec2",
+    "mtime": 1794840252.3614073,
+    "seen": 1794840428.5064707,
+    "ast_hash": "ba9f63dcd1c6873679c14c0f2dbdfcf9",
     "semantic_hash": ""
   },
   "resources/phoenix-profile.svg": {
-    "mtime": 1794838291.3517778,
-    "seen": 1794838640.819761,
-    "ast_hash": "875dccb184cd6c18807b3a6662023dfe",
+    "mtime": 1794840252.361755,
+    "seen": 1794840428.5064714,
+    "ast_hash": "cf28204d9366dc7decfc22d52ed63c57",
+    "semantic_hash": ""
+  },
+  "resources/workspace-layouts-symbolic.svg": {
+    "mtime": 1794840252.3611395,
+    "seen": 1794840428.506472,
+    "ast_hash": "ba9f63dcd1c6873679c14c0f2dbdfcf9",
+    "semantic_hash": ""
+  },
+  "resources/workspace-layouts.svg": {
+    "mtime": 1794840252.361594,
+    "seen": 1794840428.506473,
+    "ast_hash": "cf28204d9366dc7decfc22d52ed63c57",
     "semantic_hash": ""
   }
 }

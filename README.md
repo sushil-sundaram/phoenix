@@ -4,7 +4,7 @@ Phoenix is a robust session restoration and profile management system for the CO
 
 ## Key Features
 
-- **Fedora 44 COSMIC Panel Applet:** A native panel button with a distinctive symbolic Phoenix icon. Click the icon on your panel anytime to pop open an interactive GTK4 / Libadwaita layout switcher showing live hardware detection, one-click layout switching with immediate window restoration, and new profile creation.
+- **Fedora 44 COSMIC Panel Applet:** A native, minimalist panel button with a formal monochrome workspace layouts icon (no color, crisp architectural lines). Click the icon on your panel anytime to pop open the clean, minimalist GTK4 / Libadwaita layout switcher showing live hardware detection, one-click layout switching with immediate window restoration, and new profile creation.
 - **Profile Support (Home, Work, Mobile, Custom):** Maintain distinct window layouts and application sets for different contexts (e.g. `home` dual-monitor layout vs `work` office layout vs `mobile` laptop-only).
 - **Intelligent Auto-Detection:** Automatically detects the appropriate profile upon boot or restart by scoring connected Wi-Fi SSIDs and attached display hardware (display connectors, monitor make/models, monitor counts).
 - **Last Booted/Saved Profile Fallback:** If you boot in an unfamiliar environment without a matching profile rule, Phoenix seamlessly restores your last booted/saved profile.
@@ -16,8 +16,8 @@ Phoenix is a robust session restoration and profile management system for the CO
 ## Architecture
 
 - `bin/phoenix`: The unified CLI command for managing profiles, status, saving, restoring, and panel applet installation.
-- `bin/phoenix-popup`: The interactive GTK4/Libadwaita popup switcher invoked by the panel applet button or CLI (`phoenix popup`).
-- `bin/generate_icons.py`: Generates the Phoenix vector symbolic icon (`phoenix-profile-symbolic.svg`), full-color application logo (`phoenix-profile.svg`), and multi-size rasterized PNGs.
+- `bin/phoenix-popup`: The minimalist, formal GTK4/Libadwaita popup switcher invoked by the panel applet button or CLI (`phoenix popup`).
+- `bin/generate_icons.py`: Generates the formal monochrome vector icons (`workspace-layouts-symbolic.svg`, `workspace-layouts.svg`) and multi-size rasterized PNGs.
 - `bin/phoenix_profile.py`: The core profile engine managing environment probing, detection scoring, and persistent state (`~/.config/cosmic/profile-state.json`).
 - `bin/cosmic-session-saver.py`: Captures active windows and saves snapshots to the active profile's storage directory (`~/.config/cosmic/profiles/<profile>/session-snapshot.json`). Runs periodically every 3 minutes via systemd timer and automatically before shutdown/reboot.
 - `bin/cosmic-session-restorer.py`: Evaluates auto-detection, loads the appropriate profile's snapshot, launches applications, and dynamically moves windows to their physical displays and workspaces.
@@ -138,8 +138,8 @@ systemctl --user enable cosmic-session-saver-shutdown.service
 ```
 
 ### 4. Install the COSMIC Panel Applet
-Install the Phoenix panel button, icons, and register it directly onto your top panel:
+Install the Workspace Layouts panel button, monochrome icons, and register it directly onto your top panel:
 ```bash
 phoenix applet install
 ```
-The Phoenix icon will appear immediately in your COSMIC panel. Clicking it toggles the interactive profile switcher where you can view your detected environment, click any profile to switch and restore layouts, or save your active layout.
+The formal monochrome layout icon will appear immediately in your COSMIC panel. Clicking it toggles the minimalist workspace switcher where you can view your detected environment, click any profile to switch and restore layouts, or save your active layout.
