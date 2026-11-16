@@ -1,0 +1,15 @@
+{
+  "0": "server.rs",
+  "1": "Commands",
+  "2": ".event",
+  "3": "AppState",
+  "4": "main.rs",
+  "5": "CliError",
+  "6": "rules/graphify.md",
+  "7": "cosmic-session-restorer.py",
+  "8": "workflows/graphify.md",
+  "9": "cosmic-session-restore.sh",
+  "10": "Setup Instructions",
+  "11": "cosmic-session-saver.py",
+  "13": "cos-cli"
+}
