@@ -1,0 +1,510 @@
+#!/usr/bin/env python3
+"""
+Phoenix Profiles Panel Popup Switcher
+A native GTK4 / Libadwaita popup interface for switching, saving, and auto-detecting
+COSMIC desktop window layouts and hardware profiles.
+"""
+
+import sys
+import os
+import subprocess
+import signal
+
+# Ensure phoenix bin is in path for imports
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
+import gi
+gi.require_version('Gtk', '4.0')
+try:
+    gi.require_version('Adw', '1')
+    from gi.repository import Adw
+    HAS_ADW = True
+except Exception:
+    HAS_ADW = False
+
+from gi.repository import Gtk, Gdk, GLib, Gio
+import phoenix_profile
+
+APP_ID = "com.phoenix.CosmicAppletProfile"
+PID_FILE = "/tmp/phoenix-popup.pid"
+
+CUSTOM_CSS = b"""
+window.phoenix-popup {
+    background-color: alpha(@window_bg_color, 0.96);
+    border: 1px solid alpha(@borders, 0.5);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.phoenix-header {
+    padding: 16px;
+    border-bottom: 1px solid alpha(@borders, 0.25);
+    background: linear-gradient(135deg, alpha(@card_bg_color, 0.5), transparent);
+}
+.phoenix-card {
+    background-color: alpha(@card_bg_color, 0.5);
+    border: 1px solid alpha(@borders, 0.25);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin: 2px 4px;
+}
+.profile-active {
+    border: 2px solid @accent_bg_color;
+    background-color: alpha(@accent_bg_color, 0.14);
+}
+.badge-active {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+.badge-match {
+    background-color: alpha(#26A69A, 0.25);
+    color: #26A69A;
+    border: 1px solid alpha(#26A69A, 0.6);
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+.hardware-info {
+    font-size: 12px;
+    color: alpha(@window_fg_color, 0.75);
+}
+.dim-label {
+    opacity: 0.65;
+    font-size: 11px;
+}
+"""
+
+class PhoenixProfilePopup:
+    def __init__(self, app):
+        self.app = app
+        self.win = None
+        self.status_label = None
+        self.profiles_container = None
+        self.hw_container = None
+
+    def create_window(self):
+        # Apply CSS
+        provider = Gtk.CssProvider()
+        provider.load_from_data(CUSTOM_CSS)
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+
+        if HAS_ADW:
+            self.win = Adw.ApplicationWindow(application=self.app)
+        else:
+            self.win = Gtk.ApplicationWindow(application=self.app)
+
+        self.win.set_title("Phoenix Profiles")
+        self.win.set_default_size(460, 540)
+        self.win.set_resizable(False)
+        self.win.add_css_class("phoenix-popup")
+
+        # Key controller to close on Escape
+        key_ctrl = Gtk.EventControllerKey.new()
+        key_ctrl.connect("key-pressed", self.on_key_pressed)
+        self.win.add_controller(key_ctrl)
+
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        # Header
+        header = self.build_header()
+        main_box.append(header)
+
+        # Scrolled contents
+        scrolled = Gtk.ScrolledWindow()
+        scrolled.set_vexpand(True)
+        scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        content_box.set_margin_top(12)
+        content_box.set_margin_bottom(12)
+        content_box.set_margin_start(14)
+        content_box.set_margin_end(14)
+
+        # Hardware detection info card
+        self.hw_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        self.refresh_hardware_card()
+        content_box.append(self.hw_container)
+
+        # Profile list header
+        p_hdr = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        p_hdr.set_margin_top(4)
+        lbl = Gtk.Label()
+        lbl.set_markup("<b>CONFIGURED PROFILES</b>")
+        lbl.set_halign(Gtk.Align.START)
+        lbl.add_css_class("dim-label")
+        p_hdr.append(lbl)
+        content_box.append(p_hdr)
+
+        # Profile list
+        self.profiles_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        self.refresh_profiles_list()
+        content_box.append(self.profiles_container)
+
+        scrolled.set_child(content_box)
+        main_box.append(scrolled)
+
+        # Footer actions
+        footer = self.build_footer()
+        main_box.append(footer)
+
+        if HAS_ADW:
+            self.win.set_content(main_box)
+        else:
+            self.win.set_child(main_box)
+        self.win.present()
+
+    def on_key_pressed(self, controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_Escape:
+            self.win.close()
+            return True
+        return False
+
+    def build_header(self):
+        header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14)
+        header_box.add_css_class("phoenix-header")
+
+        # Phoenix Icon
+        icon_img = Gtk.Image.new_from_icon_name("phoenix-profile")
+        icon_img.set_pixel_size(44)
+        header_box.append(icon_img)
+
+        # Titles
+        title_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+        title_box.set_hexpand(True)
+        title_box.set_valign(Gtk.Align.CENTER)
+
+        title_lbl = Gtk.Label(label="Phoenix Profiles")
+        title_lbl.set_halign(Gtk.Align.START)
+        title_lbl.set_markup("<span size='large' weight='bold'>Phoenix Profiles</span>")
+
+        cfg = phoenix_profile.load_profiles_config()
+        state = phoenix_profile.get_profile_state()
+        active_p = state.get("active_profile", cfg.get("default_profile", "home"))
+
+        self.status_label = Gtk.Label()
+        self.status_label.set_halign(Gtk.Align.START)
+        self.status_label.set_markup(f"<small>Active Layout: <b>{active_p.capitalize()}</b></small>")
+        self.status_label.add_css_class("hardware-info")
+
+        title_box.append(title_lbl)
+        title_box.append(self.status_label)
+        header_box.append(title_box)
+
+        # Close button
+        close_btn = Gtk.Button.new_from_icon_name("window-close-symbolic")
+        close_btn.set_valign(Gtk.Align.CENTER)
+        close_btn.add_css_class("flat")
+        close_btn.connect("clicked", lambda b: self.win.close())
+        header_box.append(close_btn)
+
+        return header_box
+
+    def refresh_hardware_card(self):
+        # Clear
+        child = self.hw_container.get_first_child()
+        while child:
+            next_child = child.get_next_sibling()
+            self.hw_container.remove(child)
+            child = next_child
+
+        card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        card.add_css_class("phoenix-card")
+
+        top_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        lbl = Gtk.Label()
+        lbl.set_markup("<b>Live Environment</b>")
+        lbl.set_hexpand(True)
+        lbl.set_halign(Gtk.Align.START)
+        top_row.append(lbl)
+
+        # Auto-detect button
+        detect_btn = Gtk.Button(label="Auto-Detect Now")
+        detect_btn.add_css_class("suggested-action")
+        detect_btn.add_css_class("pill")
+        detect_btn.connect("clicked", self.on_auto_detect_clicked)
+        top_row.append(detect_btn)
+        card.append(top_row)
+
+        # Detect
+        detected_p, score, reasons, env = phoenix_profile.detect_profile()
+        wifi_list = env.get("wifi", [])
+        wifi = ", ".join(wifi_list) if wifi_list else "None / Wired"
+
+        monitors = env.get("monitors", [])
+        models = env.get("models", [])
+        
+        info_wifi = Gtk.Label()
+        info_wifi.set_halign(Gtk.Align.START)
+        info_wifi.set_markup(f"📶 <b>Wi-Fi:</b> {wifi}")
+        info_wifi.add_css_class("hardware-info")
+        card.append(info_wifi)
+
+        mon_str = ", ".join(models) if models else (", ".join(monitors) if monitors else "Internal Display")
+        info_mon = Gtk.Label()
+        info_mon.set_halign(Gtk.Align.START)
+        info_mon.set_wrap(True)
+        info_mon.set_markup(f"🖥️ <b>Displays ({len(monitors)}):</b> {mon_str}")
+        info_mon.add_css_class("hardware-info")
+        card.append(info_mon)
+
+        if detected_p and score > 0:
+            match_lbl = Gtk.Label()
+            match_lbl.set_halign(Gtk.Align.START)
+            match_lbl.set_markup(f"🎯 <small>Detected Match: <b>{detected_p.capitalize()}</b> (Score {score}: {', '.join(reasons)})</small>")
+            match_lbl.add_css_class("hardware-info")
+            card.append(match_lbl)
+
+        self.hw_container.append(card)
+
+    def refresh_profiles_list(self):
+        # Clear existing
+        child = self.profiles_container.get_first_child()
+        while child:
+            next_child = child.get_next_sibling()
+            self.profiles_container.remove(child)
+            child = next_child
+
+        cfg = phoenix_profile.load_profiles_config()
+        state = phoenix_profile.get_profile_state()
+        active_name = state.get("active_profile", cfg.get("default_profile", "home"))
+        detected_name, score, _, _ = phoenix_profile.detect_profile()
+
+        for name, pdata in cfg.get("profiles", {}).items():
+            row = self.build_profile_row(name, pdata, is_active=(name == active_name), is_best=(name == detected_name and score > 0))
+            self.profiles_container.append(row)
+
+        if self.status_label:
+            self.status_label.set_markup(f"<small>Active Layout: <b>{active_name.capitalize()}</b></small>")
+
+    def build_profile_row(self, name, pdata, is_active=False, is_best=False):
+        row_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        row_box.add_css_class("phoenix-card")
+        if is_active:
+            row_box.add_css_class("profile-active")
+
+        top_line = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        
+        # Profile icon
+        icon_name = "user-home-symbolic" if name == "home" else ("network-workgroup-symbolic" if name == "work" else "video-display-symbolic")
+        p_icon = Gtk.Image.new_from_icon_name(icon_name)
+        top_line.append(p_icon)
+
+        # Name & Badges
+        name_lbl = Gtk.Label()
+        name_lbl.set_markup(f"<b>{name.capitalize()}</b>")
+        name_lbl.set_halign(Gtk.Align.START)
+        top_line.append(name_lbl)
+
+        if is_active:
+            active_badge = Gtk.Label(label="✓ Active")
+            active_badge.add_css_class("badge-active")
+            top_line.append(active_badge)
+
+        if is_best and not is_active:
+            match_badge = Gtk.Label(label="★ Matched")
+            match_badge.add_css_class("badge-match")
+            top_line.append(match_badge)
+
+        # Spacer
+        spacer = Gtk.Box()
+        spacer.set_hexpand(True)
+        top_line.append(spacer)
+
+        # Switch & Restore Button
+        if not is_active:
+            switch_btn = Gtk.Button(label="Switch & Restore")
+            switch_btn.add_css_class("suggested-action")
+            switch_btn.add_css_class("pill")
+            switch_btn.connect("clicked", lambda b, p=name: self.on_switch_profile(p))
+            top_line.append(switch_btn)
+        else:
+            save_btn = Gtk.Button(label="Save Layout")
+            save_btn.add_css_class("flat")
+            save_btn.set_tooltip_text("Save current open windows to this profile")
+            save_btn.connect("clicked", lambda b, p=name: self.on_save_profile(p))
+            top_line.append(save_btn)
+
+        row_box.append(top_line)
+
+        # Details
+        desc = pdata.get("description", "")
+        wifis = ", ".join(pdata.get("wifi_ssids", []))
+        monitors = ", ".join(pdata.get("monitors", []))
+        
+        detail_text = f"<small>{desc}</small>"
+        if wifis or monitors:
+            detail_text += f"\n<span alpha='65%' size='smaller'>Triggers: Wi-Fi: [{wifis or 'any'}] | Monitors: [{monitors or 'any'}]</span>"
+        
+        desc_lbl = Gtk.Label()
+        desc_lbl.set_markup(detail_text)
+        desc_lbl.set_halign(Gtk.Align.START)
+        desc_lbl.set_wrap(True)
+        desc_lbl.add_css_class("hardware-info")
+        row_box.append(desc_lbl)
+
+        return row_box
+
+    def build_footer(self):
+        footer_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        footer_box.set_margin_start(14)
+        footer_box.set_margin_end(14)
+        footer_box.set_margin_top(8)
+        footer_box.set_margin_bottom(14)
+
+        # New Profile button
+        new_btn = Gtk.Button(label="+ New Profile...")
+        new_btn.add_css_class("flat")
+        new_btn.connect("clicked", self.on_new_profile_dialog)
+        footer_box.append(new_btn)
+
+        # Spacer
+        spacer = Gtk.Box()
+        spacer.set_hexpand(True)
+        footer_box.append(spacer)
+
+        # Restore Windows button
+        restore_btn = Gtk.Button(label="Restore Current")
+        restore_btn.set_tooltip_text("Restore window layout for the active profile")
+        restore_btn.connect("clicked", self.on_restore_windows)
+        footer_box.append(restore_btn)
+
+        return footer_box
+
+    def on_switch_profile(self, profile_name):
+        print(f"Switching to profile: {profile_name}")
+        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "switch", profile_name, "-r"], check=False)
+        self.show_notification(f"Switched to '{profile_name}' and restored window layout!")
+        self.refresh_hardware_card()
+        self.refresh_profiles_list()
+
+    def on_save_profile(self, profile_name):
+        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "save", profile_name], check=False)
+        self.show_notification(f"Saved current window positions to '{profile_name}'!")
+        self.refresh_profiles_list()
+
+    def on_auto_detect_clicked(self, btn):
+        detected_name, score, reasons, _ = phoenix_profile.detect_profile()
+        if detected_name and score > 0:
+            self.on_switch_profile(detected_name)
+        else:
+            self.show_notification("No matching profile detected; using active profile.")
+            self.refresh_hardware_card()
+            self.refresh_profiles_list()
+
+    def on_restore_windows(self, btn):
+        cfg = phoenix_profile.load_profiles_config()
+        state = phoenix_profile.get_profile_state()
+        active = state.get("active_profile", cfg.get("default_profile", "home"))
+        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "restore", active], check=False)
+        self.show_notification(f"Restored window layout for '{active}'!")
+
+    def on_new_profile_dialog(self, btn):
+        dialog = Gtk.Window(title="Create New Profile")
+        dialog.set_transient_for(self.win)
+        dialog.set_modal(True)
+        dialog.set_default_size(320, 160)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        box.set_margin_start(16)
+        box.set_margin_end(16)
+        box.set_margin_top(16)
+        box.set_margin_bottom(16)
+
+        lbl = Gtk.Label(label="Enter name for new profile:")
+        lbl.set_halign(Gtk.Align.START)
+        box.append(lbl)
+
+        entry = Gtk.Entry()
+        entry.set_placeholder_text("e.g. library, cafe, client-site")
+        box.append(entry)
+
+        btn_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        btn_row.set_halign(Gtk.Align.END)
+        
+        cancel_btn = Gtk.Button(label="Cancel")
+        cancel_btn.connect("clicked", lambda b: dialog.close())
+        btn_row.append(cancel_btn)
+
+        save_btn = Gtk.Button(label="Learn & Create")
+        save_btn.add_css_class("suggested-action")
+        
+        def do_save(b):
+            pname = entry.get_text().strip().lower()
+            if pname:
+                subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "add", pname, "--learn"], check=False)
+                subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "switch", pname, "-r"], check=False)
+                dialog.close()
+                self.show_notification(f"Created and activated profile '{pname}'!")
+                self.refresh_hardware_card()
+                self.refresh_profiles_list()
+
+        save_btn.connect("clicked", do_save)
+        btn_row.append(save_btn)
+        box.append(btn_row)
+
+        dialog.set_child(box)
+        dialog.present()
+
+    def show_notification(self, message):
+        print(f"[Phoenix] {message}")
+        subprocess.run(["notify-send", "-a", "Phoenix Profiles", "-i", "phoenix-profile", "Phoenix Profiles", message], check=False)
+
+def check_single_instance_toggle():
+    """If already running, toggle by sending SIGTERM or closing."""
+    if os.path.exists(PID_FILE):
+        try:
+            with open(PID_FILE, "r") as f:
+                pid = int(f.read().strip())
+            os.kill(pid, 0)
+            os.kill(pid, signal.SIGTERM)
+            try:
+                os.remove(PID_FILE)
+            except Exception:
+                pass
+            print(f"Phoenix popup already open (PID {pid}), toggled close.")
+            sys.exit(0)
+        except (ProcessLookupError, ValueError):
+            pass
+
+def main():
+    if "--toggle" in sys.argv:
+        check_single_instance_toggle()
+
+    with open(PID_FILE, "w") as f:
+        f.write(str(os.getpid()))
+
+    def cleanup(*args):
+        try:
+            os.remove(PID_FILE)
+        except Exception:
+            pass
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, cleanup)
+    signal.signal(signal.SIGTERM, cleanup)
+
+    if HAS_ADW:
+        app = Adw.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
+    else:
+        app = Gtk.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
+
+    popup = PhoenixProfilePopup(app)
+    app.connect("activate", lambda a: popup.create_window())
+
+    try:
+        app.run(None)
+    finally:
+        cleanup()
+
+if __name__ == "__main__":
+    main()

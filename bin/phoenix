@@ -230,6 +230,95 @@ def cmd_profile_edit(args):
     editor = os.environ.get("EDITOR") or os.environ.get("VISUAL") or "nano"
     subprocess.run([editor, phoenix_profile.PROFILES_CONFIG_FILE])
 
+def cmd_popup(args):
+    """Opens or toggles the Phoenix profile popup switcher."""
+    popup_py = os.path.join(BIN_DIR, "phoenix-popup")
+    cmd = [sys.executable, popup_py]
+    if getattr(args, "toggle", True):
+        cmd.append("--toggle")
+    subprocess.Popen(cmd)
+
+def cmd_applet_status(args):
+    """Checks the status of the COSMIC panel applet."""
+    wings_file = os.path.expanduser("~/.config/cosmic/com.system76.CosmicPanel.Panel/v1/plugins_wings")
+    is_installed = False
+    if os.path.exists(wings_file):
+        with open(wings_file, "r") as f:
+            is_installed = "com.phoenix.CosmicPanelProfileButton" in f.read()
+
+    ps_out = subprocess.run(["pgrep", "-f", "com.phoenix.CosmicAppletProfile"], capture_output=True, text=True)
+    is_running = ps_out.returncode == 0
+    pids = ps_out.stdout.strip().split() if is_running else []
+
+    print("==================================================")
+    print("         PHOENIX COSMIC PANEL APPLET STATUS       ")
+    print("==================================================")
+    print(f"  Panel Configuration  : {'Registered' if is_installed else 'Not Registered'}")
+    print(f"  Applet Processes     : {'Running (' + str(len(pids)) + ' instances)' if is_running else 'Not Running'}")
+    if pids:
+        print(f"    └─ Active PIDs     : {', '.join(pids)}")
+    print(f"  Symbolic Icon        : ~/.local/share/icons/hicolor/scalable/status/phoenix-profile-symbolic.svg")
+    print(f"  Color Icon           : ~/.local/share/icons/hicolor/scalable/apps/phoenix-profile.svg")
+    print(f"  Desktop Applet       : ~/.local/share/applications/com.phoenix.CosmicPanelProfileButton.desktop")
+    print("==================================================")
+
+def cmd_applet_install(args):
+    """Installs icons, desktop files, and registers the applet on the COSMIC panel."""
+    print("Installing Phoenix COSMIC Panel Applet...")
+    
+    # 1. Generate icons
+    gen_py = os.path.join(BIN_DIR, "generate_icons.py")
+    subprocess.run([sys.executable, gen_py], check=True)
+
+    # 2. Install desktop files from resources
+    res_dir = os.path.join(os.path.dirname(BIN_DIR), "resources")
+    app_dir = os.path.expanduser("~/.local/share/applications")
+    os.makedirs(app_dir, exist_ok=True)
+
+    for df in ["com.phoenix.CosmicAppletProfile.desktop", "com.phoenix.CosmicPanelProfileButton.desktop", "com.phoenix.PhoenixProfileManager.desktop"]:
+        src = os.path.join(res_dir, df)
+        dst = os.path.join(app_dir, df)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+            print(f"Installed desktop entry: {dst}")
+
+    subprocess.run(["update-desktop-database", app_dir], check=False)
+
+    # 3. Add to plugins_wings if not already present
+    wings_file = os.path.expanduser("~/.config/cosmic/com.system76.CosmicPanel.Panel/v1/plugins_wings")
+    if os.path.exists(wings_file):
+        with open(wings_file, "r") as f:
+            content = f.read()
+        if "com.phoenix.CosmicPanelProfileButton" not in content:
+            # Insert into left wing
+            new_content = content.replace(
+                '"io.github.crocodile.cosmic-ext-applet-workspace-icons",',
+                '"io.github.crocodile.cosmic-ext-applet-workspace-icons",\n    "com.phoenix.CosmicPanelProfileButton",'
+            )
+            with open(wings_file, "w") as f:
+                f.write(new_content)
+            print(f"Registered applet in: {wings_file}")
+        else:
+            print("Applet already registered in panel configuration.")
+
+    print("\n✓ Phoenix panel applet successfully installed and active!")
+
+def cmd_applet_uninstall(args):
+    """Unregisters the applet from the COSMIC panel."""
+    wings_file = os.path.expanduser("~/.config/cosmic/com.system76.CosmicPanel.Panel/v1/plugins_wings")
+    if os.path.exists(wings_file):
+        with open(wings_file, "r") as f:
+            content = f.read()
+        if "com.phoenix.CosmicPanelProfileButton" in content:
+            new_content = content.replace('    "com.phoenix.CosmicPanelProfileButton",\n', '')
+            new_content = new_content.replace('"com.phoenix.CosmicPanelProfileButton",', '')
+            with open(wings_file, "w") as f:
+                f.write(new_content)
+            print(f"Removed applet from: {wings_file}")
+        else:
+            print("Applet was not registered in panel configuration.")
+    print("✓ Phoenix panel applet uninstalled from panel.")
+
 def main():
     parser = argparse.ArgumentParser(
         prog="phoenix",
@@ -290,12 +379,34 @@ def main():
     p_edit = prof_sub.add_parser("edit", help="Edit profiles.json in $EDITOR")
     p_edit.set_defaults(func=cmd_profile_edit)
 
+    # phoenix popup
+    p_popup = subparsers.add_parser("popup", help="Open or toggle the Phoenix profile switcher popup GUI")
+    p_popup.set_defaults(func=cmd_popup)
+
+    # phoenix applet ...
+    p_applet = subparsers.add_parser("applet", help="Manage COSMIC panel applet integration")
+    applet_sub = p_applet.add_subparsers(dest="applet_action")
+
+    p_a_status = applet_sub.add_parser("status", help="Show COSMIC panel applet installation & process status")
+    p_a_status.set_defaults(func=cmd_applet_status)
+
+    p_a_install = applet_sub.add_parser("install", help="Install icons, desktop entries and register applet on panel")
+    p_a_install.set_defaults(func=cmd_applet_install)
+
+    p_a_uninstall = applet_sub.add_parser("uninstall", help="Remove applet from COSMIC panel")
+    p_a_uninstall.set_defaults(func=cmd_applet_uninstall)
+
+    p_a_open = applet_sub.add_parser("open", help="Open/toggle the applet popup window")
+    p_a_open.set_defaults(func=cmd_popup)
+
     args = parser.parse_args()
 
     if hasattr(args, "func"):
         args.func(args)
     elif args.command == "profile" and not getattr(args, "profile_action", None):
         cmd_profile_list(args)
+    elif args.command == "applet" and not getattr(args, "applet_action", None):
+        cmd_applet_status(args)
     else:
         cmd_status(args)
 

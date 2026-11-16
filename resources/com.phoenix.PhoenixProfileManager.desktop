@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Phoenix Profile Manager
+Comment=Manage and switch COSMIC desktop window layouts and hardware profiles
+Type=Application
+Exec=/home/sushil-s/phoenix/bin/phoenix-popup
+Terminal=false
+Categories=Utility;Settings;DesktopSettings;
+Icon=phoenix-profile
+StartupNotify=true
+Keywords=COSMIC;Phoenix;Profile;Layout;Display;Monitor;Session;

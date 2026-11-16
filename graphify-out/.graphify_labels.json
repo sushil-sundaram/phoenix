@@ -3,8 +3,8 @@
   "1": "Commands",
   "2": ".event",
   "3": "phoenix_profile.py",
-  "4": "main.rs",
-  "5": "CliError",
+  "4": "AppState",
+  "5": "find_apps",
   "6": "rules/graphify.md",
   "7": "cosmic-session-restorer.py",
   "8": "workflows/graphify.md",
@@ -13,5 +13,9 @@
   "11": "cosmic-session-saver.py",
   "12": "phoenix",
   "13": "cos-cli",
-  "14": "TaskGuard"
+  "14": "PhoenixProfilePopup",
+  "15": "main.rs",
+  "16": "String",
+  "17": "NamedHandle",
+  "18": "generate_icons.py"
 }

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Phoenix Profiles
+Comment=Switch COSMIC desktop layouts and profiles
+Type=Application
+Exec=/home/sushil-s/phoenix/bin/phoenix-popup --toggle
+Terminal=false
+Categories=COSMIC;Utility;
+Icon=phoenix-profile-symbolic
+StartupNotify=false
+NoDisplay=true
+X-CosmicApplet=true
