@@ -16,29 +16,19 @@ import time
 import shutil
 import glob
 
+BIN_DIR = os.path.dirname(os.path.abspath(__file__))
+if BIN_DIR not in sys.path:
+    sys.path.insert(0, BIN_DIR)
+
+import phoenix_profile
+
 SNAPSHOT_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json")
 BACKUP_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json.bak")
 COS_CLI = os.path.expanduser("~/phoenix/bin/cos-cli")
 IGNORED_APPS = {"steam"}
 
 def get_env():
-    env = os.environ.copy()
-    uid = os.getuid()
-    runtime_dir = env.get("XDG_RUNTIME_DIR", f"/run/user/{uid}")
-    env["XDG_RUNTIME_DIR"] = runtime_dir
-
-    if "WAYLAND_DISPLAY" not in env or not os.path.exists(os.path.join(runtime_dir, env.get("WAYLAND_DISPLAY", ""))):
-        for candidate in ["wayland-1", "wayland-0"]:
-            if os.path.exists(os.path.join(runtime_dir, candidate)):
-                env["WAYLAND_DISPLAY"] = candidate
-                break
-        else:
-            env["WAYLAND_DISPLAY"] = "wayland-1"
-
-    home = os.path.expanduser("~")
-    extra_paths = f"{home}/.cargo/bin:{home}/.pixi/bin:{home}/.local/bin:/usr/local/bin:/usr/bin"
-    env["PATH"] = f"{extra_paths}:{env.get('PATH', '')}"
-    return env
+    return phoenix_profile.get_env()
 
 def sanitize_chrome_environment():
     """Disables Chrome Profile Picker and resets exit_type so tabs restore automatically."""
@@ -357,24 +347,35 @@ def move_window_and_verify(track_app_id, track_title, target_output, target_ws, 
 
     return False, candidate
 
-def restore_session():
-    target_file = SNAPSHOT_PATH
+def restore_session(profile_name=None):
+    chosen_profile, reason = phoenix_profile.resolve_profile_for_restore(profile_name)
+    print(f"Profile: '{chosen_profile}' ({reason})")
+
+    paths = phoenix_profile.get_snapshot_paths(chosen_profile)
+    target_file = paths["snapshot"]
     if not os.path.exists(target_file):
-        target_file = BACKUP_PATH
+        target_file = paths["backup"]
 
     if not os.path.exists(target_file):
-        print(f"No snapshot found at {SNAPSHOT_PATH} or backup.", file=sys.stderr)
-        return
+        if os.path.exists(SNAPSHOT_PATH):
+            target_file = SNAPSHOT_PATH
+        elif os.path.exists(BACKUP_PATH):
+            target_file = BACKUP_PATH
+
+    if not os.path.exists(target_file):
+        print(f"No snapshot found for profile '{chosen_profile}' or fallback.", file=sys.stderr)
+        return False
 
     with open(target_file, "r") as f:
         snapshot = json.load(f)
 
     saved_apps = snapshot.get("apps", [])
     if not saved_apps:
-        print("No apps found in snapshot.")
-        return
+        print(f"No apps found in snapshot for profile '{chosen_profile}'.")
+        return False
 
-    print(f"Restoring {len(saved_apps)} app windows from snapshot ({snapshot.get('timestamp_str')})...")
+    print(f"Restoring {len(saved_apps)} app windows from profile '{chosen_profile}' snapshot ({snapshot.get('timestamp_str')})...")
+    phoenix_profile.record_profile_action("restore", chosen_profile, reason)
 
     # Sanitize Chrome Local State & Preferences for auto profile/tab restoration
     sanitize_chrome_environment()
@@ -544,4 +545,12 @@ def restore_session():
     print("COSMIC desktop session restoration complete.")
 
 if __name__ == "__main__":
-    restore_session()
+    explicit_profile = None
+    if len(sys.argv) > 1:
+        for i, arg in enumerate(sys.argv):
+            if arg in ("-p", "--profile") and i + 1 < len(sys.argv):
+                explicit_profile = sys.argv[i + 1]
+                break
+            elif not arg.startswith("-") and i > 0:
+                explicit_profile = arg
+    restore_session(explicit_profile)

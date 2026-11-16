@@ -1,0 +1,303 @@
+#!/usr/bin/env python3
+"""
+Phoenix CLI: The Unified Session & Profile Manager for COSMIC Desktop.
+Supports profile auto-detection by Wi-Fi & connected monitors, manual switching,
+saving, and restoring.
+"""
+
+import os
+import sys
+import argparse
+import subprocess
+import json
+import time
+import shutil
+
+# Ensure phoenix bin is in path for module imports
+BIN_DIR = os.path.dirname(os.path.abspath(__file__))
+if BIN_DIR not in sys.path:
+    sys.path.insert(0, BIN_DIR)
+
+import phoenix_profile
+
+def cmd_status(args):
+    """Displays comprehensive Phoenix status including profiles, environment, and services."""
+    cfg = phoenix_profile.load_profiles_config()
+    state = phoenix_profile.get_profile_state()
+    detected_p, score, reasons, env = phoenix_profile.detect_profile()
+
+    active_p = state.get("active_profile", cfg.get("default_profile", "home"))
+    last_booted = state.get("last_booted_profile", "none")
+    last_saved = state.get("last_saved_profile", "none")
+
+    print("==================================================")
+    print("           PHOENIX SESSION RESTORER STATUS        ")
+    print("==================================================")
+    print(f"  Active Profile       : {active_p}")
+    print(f"  Auto-Detection       : {'Enabled' if cfg.get('auto_detect', True) else 'Disabled'}")
+    if detected_p:
+        print(f"  Auto-Detected        : {detected_p} (Score: {score})")
+        print(f"    └─ Match Reasons   : {', '.join(reasons)}")
+    else:
+        print(f"  Auto-Detected        : None (will fallback to last saved/booted: {last_booted})")
+
+    print("\n[Environment Hardware]")
+    wifi_str = ", ".join(env.get("wifi", [])) if env.get("wifi") else "(none/disconnected)"
+    print(f"  Active Wi-Fi         : {wifi_str}")
+    monitors = env.get("monitors", [])
+    models = env.get("models", [])
+    print(f"  Connected Displays   : {', '.join(monitors) if monitors else '(none)'}")
+    if models:
+        print(f"  Display Hardware     : {', '.join(models)}")
+
+    print("\n[Profile History]")
+    print(f"  Last Booted Profile  : {last_booted}")
+    print(f"  Last Saved Profile   : {last_saved}")
+    if state.get("last_action_timestamp"):
+        ts_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(state["last_action_timestamp"]))
+        print(f"  Last Action          : {state.get('last_action')} at {ts_str}")
+        if state.get("last_action_reason"):
+            print(f"    └─ Reason          : {state['last_action_reason']}")
+
+    # Check snapshot for active profile
+    paths = phoenix_profile.get_snapshot_paths(active_p)
+    snap_exists = os.path.exists(paths["snapshot"])
+    if snap_exists:
+        try:
+            with open(paths["snapshot"], "r") as f:
+                snap_data = json.load(f)
+            app_cnt = len(snap_data.get("apps", []))
+            snap_time = snap_data.get("timestamp_str", "unknown")
+            print(f"\n[Active Snapshot ({active_p})]")
+            print(f"  Location             : {paths['snapshot']}")
+            print(f"  Window Count         : {app_cnt} windows")
+            print(f"  Captured At          : {snap_time}")
+        except Exception:
+            pass
+    else:
+        print(f"\n[Active Snapshot ({active_p})]: Not created yet.")
+
+    print("==================================================")
+
+def cmd_profile_list(args):
+    """Lists all configured profiles with their detection rules and snapshot status."""
+    cfg = phoenix_profile.load_profiles_config()
+    state = phoenix_profile.get_profile_state()
+    active_p = state.get("active_profile", cfg.get("default_profile", "home"))
+    detected_p, _, _, _ = phoenix_profile.detect_profile()
+
+    print(f"{'PROFILE':<12} {'ACTIVE':<8} {'DETECTED':<10} {'SNAPSHOT':<14} {'DESCRIPTION'}")
+    print("-" * 75)
+    for name, p in cfg.get("profiles", {}).items():
+        is_active = "*" if name == active_p else ""
+        is_detected = "YES" if name == detected_p else ""
+        paths = phoenix_profile.get_snapshot_paths(name)
+        snap_status = "Saved" if os.path.exists(paths["snapshot"]) else "No snapshot"
+        desc = p.get("description", "")
+        print(f"{name:<12} {is_active:<8} {is_detected:<10} {snap_status:<14} {desc}")
+
+        # Print criteria sub-bullets
+        criteria = []
+        if p.get("wifi_ssids"):
+            criteria.append(f"Wi-Fi: {', '.join(p['wifi_ssids'])}")
+        if p.get("monitors"):
+            criteria.append(f"Monitors: {', '.join(p['monitors'])}")
+        if p.get("monitor_models"):
+            criteria.append(f"Models: {', '.join(p['monitor_models'])}")
+        if p.get("min_monitors"):
+            criteria.append(f"Min monitors: {p['min_monitors']}")
+        if p.get("max_monitors"):
+            criteria.append(f"Max monitors: {p['max_monitors']}")
+        if criteria:
+            print(f"  └─ Triggers: {' | '.join(criteria)}")
+        print()
+
+def cmd_profile_detect(args):
+    """Shows in-depth environment evaluation and score per profile."""
+    cfg = phoenix_profile.load_profiles_config()
+    cur_wifi = phoenix_profile.get_active_wifi_ssids()
+    cur_monitors, cur_models, cur_details = phoenix_profile.get_connected_monitors()
+
+    print("Current Environment Probing:")
+    print(f"  Wi-Fi SSIDs    : {cur_wifi}")
+    print(f"  Monitors       : {cur_monitors}")
+    print(f"  Display Models : {cur_models}")
+    print(f"  Details        : {cur_details}")
+    print("\nProfile Scores:")
+    print("-" * 60)
+
+    best_p = None
+    best_score = 0
+    for name, p in cfg.get("profiles", {}).items():
+        score, reasons = phoenix_profile.score_profile(name, p, cur_wifi, cur_monitors, cur_models, cur_details)
+        prefix = "-> WINNER" if score > best_score else "  "
+        print(f"{prefix} [{name}] Score: {score}")
+        if reasons:
+            for r in reasons:
+                print(f"      • {r}")
+        else:
+            print("      • (no criteria matched)")
+        if score > best_score:
+            best_score = score
+            best_p = name
+
+    print("-" * 60)
+    if best_p:
+        print(f"Auto-Detect Decision: Profile '{best_p}' will be loaded on boot/restore.")
+    else:
+        state = phoenix_profile.get_profile_state()
+        fallback = state.get("last_booted_profile") or state.get("last_saved_profile") or cfg.get("default_profile", "home")
+        print(f"Auto-Detect Decision: No profile matched. Falling back to last booted/saved: '{fallback}'.")
+
+def cmd_profile_switch(args):
+    """Switches active profile and optionally restores window layout."""
+    cfg = phoenix_profile.load_profiles_config()
+    name = args.name.strip()
+    if name not in cfg.get("profiles", {}):
+        print(f"Error: Profile '{name}' does not exist.", file=sys.stderr)
+        print(f"Available profiles: {', '.join(cfg.get('profiles', {}).keys())}", file=sys.stderr)
+        sys.exit(1)
+
+    phoenix_profile.record_profile_action("switch", name, f"manually switched to '{name}'")
+    print(f"Switched active profile to: '{name}'")
+
+    if args.restore:
+        print(f"Restoring layout for profile '{name}'...")
+        restorer_py = os.path.join(BIN_DIR, "cosmic-session-restorer.py")
+        subprocess.run([sys.executable, restorer_py, "--profile", name])
+
+def cmd_profile_save(args):
+    """Saves session snapshot into specified or active profile."""
+    profile_name = args.name
+    if not profile_name:
+        profile_name = phoenix_profile.resolve_profile_for_save()
+
+    saver_py = os.path.join(BIN_DIR, "cosmic-session-saver.py")
+    res = subprocess.run([sys.executable, saver_py, "--profile", profile_name])
+    if res.returncode == 0:
+        print(f"Successfully saved session snapshot for profile: '{profile_name}'")
+    else:
+        print(f"Failed to save session snapshot.", file=sys.stderr)
+        sys.exit(res.returncode)
+
+def cmd_profile_restore(args):
+    """Restores session snapshot from specified or auto-detected/last profile."""
+    profile_name = args.name
+    restorer_py = os.path.join(BIN_DIR, "cosmic-session-restorer.py")
+    cmd = [sys.executable, restorer_py]
+    if profile_name:
+        cmd.extend(["--profile", profile_name])
+
+    res = subprocess.run(cmd)
+    sys.exit(res.returncode)
+
+def cmd_profile_add(args):
+    """Adds a new profile to profiles.json, optionally learning current environment."""
+    cfg = phoenix_profile.load_profiles_config()
+    name = args.name.strip()
+    if name in cfg.get("profiles", {}):
+        print(f"Profile '{name}' already exists. Use edit or update.", file=sys.stderr)
+        sys.exit(1)
+
+    p_data = {
+        "description": args.desc or f"Profile {name}",
+        "wifi_ssids": [],
+        "monitors": [],
+        "monitor_models": []
+    }
+
+    if args.learn:
+        cur_wifi = phoenix_profile.get_active_wifi_ssids()
+        cur_monitors, cur_models, _ = phoenix_profile.get_connected_monitors()
+        p_data["wifi_ssids"] = cur_wifi
+        p_data["monitors"] = [m for m in cur_monitors if not m.startswith("eDP")]
+        p_data["monitor_models"] = cur_models
+        if p_data["monitors"]:
+            p_data["min_monitors"] = len(p_data["monitors"])
+        print(f"Learned current environment for '{name}':")
+        print(f"  Wi-Fi: {cur_wifi}")
+        print(f"  Monitors: {p_data['monitors']}")
+        print(f"  Models: {cur_models}")
+
+    cfg["profiles"][name] = p_data
+    phoenix_profile.save_profiles_config(cfg)
+    # Ensure profile storage directory exists
+    phoenix_profile.get_snapshot_paths(name)
+    print(f"Successfully created profile '{name}'!")
+
+def cmd_profile_edit(args):
+    """Opens profiles.json in system editor."""
+    editor = os.environ.get("EDITOR") or os.environ.get("VISUAL") or "nano"
+    subprocess.run([editor, phoenix_profile.PROFILES_CONFIG_FILE])
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="phoenix",
+        description="Phoenix: Session & Profile Manager for COSMIC Desktop."
+    )
+    subparsers = parser.add_subparsers(dest="command")
+
+    # phoenix status
+    p_status = subparsers.add_parser("status", help="Show Phoenix system, profile and display status")
+    p_status.set_defaults(func=cmd_status)
+
+    # phoenix save [name]
+    p_save = subparsers.add_parser("save", help="Save session snapshot")
+    p_save.add_argument("name", nargs="?", default=None, help="Profile name (defaults to active)")
+    p_save.set_defaults(func=cmd_profile_save)
+
+    # phoenix restore [name]
+    p_restore = subparsers.add_parser("restore", help="Restore session snapshot")
+    p_restore.add_argument("name", nargs="?", default=None, help="Profile name (defaults to auto-detected/last)")
+    p_restore.set_defaults(func=cmd_profile_restore)
+
+    # phoenix profile ...
+    p_profile = subparsers.add_parser("profile", help="Manage desktop profiles")
+    prof_sub = p_profile.add_subparsers(dest="profile_action")
+
+    # phoenix profile list
+    p_list = prof_sub.add_parser("list", help="List all configured profiles")
+    p_list.set_defaults(func=cmd_profile_list)
+
+    # phoenix profile detect
+    p_detect = prof_sub.add_parser("detect", help="Run auto-detection and show scoring breakdown")
+    p_detect.set_defaults(func=cmd_profile_detect)
+
+    # phoenix profile switch <name> [-r]
+    p_switch = prof_sub.add_parser("switch", help="Switch active profile")
+    p_switch.add_argument("name", help="Profile to switch to")
+    p_switch.add_argument("-r", "--restore", action="store_true", help="Immediately restore window layout for this profile")
+    p_switch.set_defaults(func=cmd_profile_switch)
+
+    # phoenix profile save [name]
+    p_psave = prof_sub.add_parser("save", help="Save session to profile")
+    p_psave.add_argument("name", nargs="?", default=None, help="Profile name (defaults to active)")
+    p_psave.set_defaults(func=cmd_profile_save)
+
+    # phoenix profile restore [name]
+    p_prestore = prof_sub.add_parser("restore", help="Restore session from profile")
+    p_prestore.add_argument("name", nargs="?", default=None, help="Profile name (defaults to auto-detected/last)")
+    p_prestore.set_defaults(func=cmd_profile_restore)
+
+    # phoenix profile add <name> [--learn]
+    p_add = prof_sub.add_parser("add", help="Add a new profile")
+    p_add.add_argument("name", help="Name of new profile")
+    p_add.add_argument("--desc", default="", help="Profile description")
+    p_add.add_argument("--learn", action="store_true", help="Auto-populate rules using current Wi-Fi and connected monitors")
+    p_add.set_defaults(func=cmd_profile_add)
+
+    # phoenix profile edit
+    p_edit = prof_sub.add_parser("edit", help="Edit profiles.json in $EDITOR")
+    p_edit.set_defaults(func=cmd_profile_edit)
+
+    args = parser.parse_args()
+
+    if hasattr(args, "func"):
+        args.func(args)
+    elif args.command == "profile" and not getattr(args, "profile_action", None):
+        cmd_profile_list(args)
+    else:
+        cmd_status(args)
+
+if __name__ == "__main__":
+    main()

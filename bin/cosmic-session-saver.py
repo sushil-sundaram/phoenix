@@ -2,7 +2,7 @@
 """
 COSMIC Desktop Session Saver
 Captures active applications, window titles, workspace groups, workspaces,
-outputs, and window states using cos-cli and saves to JSON snapshot.
+outputs, and window states using cos-cli and saves to profile-specific JSON snapshot.
 """
 
 import subprocess
@@ -11,29 +11,17 @@ import os
 import sys
 import time
 
-SNAPSHOT_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json")
-BACKUP_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json.bak")
+BIN_DIR = os.path.dirname(os.path.abspath(__file__))
+if BIN_DIR not in sys.path:
+    sys.path.insert(0, BIN_DIR)
+
+import phoenix_profile
+
 COS_CLI = os.path.expanduser("~/phoenix/bin/cos-cli")
 IGNORED_APPS = {"steam"}
 
 def get_env():
-    env = os.environ.copy()
-    uid = os.getuid()
-    runtime_dir = env.get("XDG_RUNTIME_DIR", f"/run/user/{uid}")
-    env["XDG_RUNTIME_DIR"] = runtime_dir
-
-    if "WAYLAND_DISPLAY" not in env or not os.path.exists(os.path.join(runtime_dir, env.get("WAYLAND_DISPLAY", ""))):
-        for candidate in ["wayland-1", "wayland-0"]:
-            if os.path.exists(os.path.join(runtime_dir, candidate)):
-                env["WAYLAND_DISPLAY"] = candidate
-                break
-        else:
-            env["WAYLAND_DISPLAY"] = "wayland-1"
-
-    home = os.path.expanduser("~")
-    extra_paths = f"{home}/.cargo/bin:{home}/.pixi/bin:{home}/.local/bin:/usr/local/bin:/usr/bin"
-    env["PATH"] = f"{extra_paths}:{env.get('PATH', '')}"
-    return env
+    return phoenix_profile.get_env()
 
 def capture_session():
     if not os.path.exists(COS_CLI):
@@ -86,24 +74,50 @@ def capture_session():
     }
     return snapshot
 
-def main():
-    os.makedirs(os.path.dirname(SNAPSHOT_PATH), exist_ok=True)
+def save_session(profile_name=None):
+    target_profile = phoenix_profile.resolve_profile_for_save(profile_name)
+    paths = phoenix_profile.get_snapshot_paths(target_profile)
+    snapshot_path = paths["snapshot"]
+    backup_path = paths["backup"]
+
     snapshot = capture_session()
     if snapshot is None:
-        sys.exit(1)
+        return False
+
+    snapshot["profile"] = target_profile
 
     # Only overwrite if valid apps were captured
     if snapshot["apps"]:
-        if os.path.exists(SNAPSHOT_PATH):
+        if os.path.exists(snapshot_path):
             try:
-                os.replace(SNAPSHOT_PATH, BACKUP_PATH)
+                os.replace(snapshot_path, backup_path)
             except Exception:
                 pass
-        with open(SNAPSHOT_PATH, "w") as f:
+        with open(snapshot_path, "w") as f:
             json.dump(snapshot, f, indent=2)
-        print(f"[{snapshot['timestamp_str']}] Saved {len(snapshot['apps'])} app windows to {SNAPSHOT_PATH}")
+
+        # Keep legacy snapshot in sync for backwards compatibility
+        phoenix_profile.sync_legacy_snapshot(snapshot_path)
+        phoenix_profile.record_profile_action("save", target_profile, f"saved {len(snapshot['apps'])} windows")
+        print(f"[{snapshot['timestamp_str']}] Saved {len(snapshot['apps'])} app windows to profile '{target_profile}' ({snapshot_path})")
+        return True
     else:
-        print(f"No active app windows captured. Skipping overwrite.")
+        print("No active app windows captured. Skipping overwrite.")
+        return False
+
+def main():
+    explicit_profile = None
+    if len(sys.argv) > 1:
+        for i, arg in enumerate(sys.argv):
+            if arg in ("-p", "--profile") and i + 1 < len(sys.argv):
+                explicit_profile = sys.argv[i + 1]
+                break
+            elif not arg.startswith("-") and i > 0:
+                explicit_profile = arg
+
+    success = save_session(explicit_profile)
+    if not success:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

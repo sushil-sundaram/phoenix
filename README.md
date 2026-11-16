@@ -1,72 +1,127 @@
-# Phoenix: COSMIC Session Restorer
+# Phoenix: COSMIC Session Restorer & Profile Manager
 
-Phoenix is a robust session restoration tool for the COSMIC Desktop Environment. Like a mythical bird rising from its ashes, Phoenix takes a snapshot of all active application windows across all workspaces and displays, and accurately restores them on boot exactly where you left them.
+Phoenix is a robust session restoration and profile management system for the COSMIC Desktop Environment. Like a mythical bird rising from its ashes, Phoenix captures snapshots of all active application windows across all workspaces and physical displays, and restores them accurately on boot or profile switch.
 
-## Features
-- **Intelligent Display Mapping:** Maps windows back to their correct physical displays (`eDP-2`, `DP-9`, etc.) regardless of how Wayland assigns workspace group numbers on boot.
-- **XWayland & Wayland Support:** Automatically handles Wayland applications and XWayland applications (e.g., `KiCad`, `FreeCAD`) even when their `app_id` is empty by fuzzy matching against the application title.
+## Key Features
+
+- **Profile Support (Home, Work, Mobile, Custom):** Maintain distinct window layouts and application sets for different contexts (e.g. `home` dual-monitor layout vs `work` office layout vs `mobile` laptop-only).
+- **Intelligent Auto-Detection:** Automatically detects the appropriate profile upon boot or restart by scoring connected Wi-Fi SSIDs and attached display hardware (display connectors, monitor make/models, monitor counts).
+- **Last Booted/Saved Profile Fallback:** If you boot in an unfamiliar environment without a matching profile rule, Phoenix seamlessly restores your last booted/saved profile.
+- **Dynamic Live Index Resolution:** Queries live Wayland compositor state before every move, eliminating window-index drift and preventing scrambled windows.
+- **Bipartite Tab Matching for Chrome:** Matches multi-window Chrome sessions back to their exact intended screens and workspaces using tab title tokens.
 - **Clean Chrome Restoration:** Sanitizes Chrome preferences to cleanly restore tabs without showing crash dialogues or profile pickers.
-- **Custom Tooling:** Ships with a custom, modified build of `cos-cli` that enhances window title matching.
+- **Unified CLI (`phoenix`):** A command-line utility to inspect status, switch profiles, save snapshots, and test auto-detection rules.
 
 ## Architecture
-- `bin/cosmic-session-saver.py`: Runs automatically during system shutdown via a systemd user service. Parses output from `cos-cli info` and generates a snapshot at `~/.config/cosmic/session-snapshot.json`.
-- `bin/cosmic-session-restorer.py`: Runs automatically during boot via an XDG autostart `.desktop` file. Waits for displays to be discovered, then spawns the applications and moves them to their saved workspace.
-- `bin/cosmic-session-restore.sh`: A simple shell wrapper to set up environments and log output for the restorer.
-- `src/cos-cli`: The modified Rust source code for the COSMIC command-line tool which adds title fallback matching.
+
+- `bin/phoenix`: The unified CLI command for managing profiles, status, saving, and restoring.
+- `bin/phoenix_profile.py`: The core profile engine managing environment probing, detection scoring, and persistent state (`~/.config/cosmic/profile-state.json`).
+- `bin/cosmic-session-saver.py`: Captures active windows and saves snapshots to the active profile's storage directory (`~/.config/cosmic/profiles/<profile>/session-snapshot.json`). Runs periodically every 3 minutes via systemd timer and automatically before shutdown/reboot.
+- `bin/cosmic-session-restorer.py`: Evaluates auto-detection, loads the appropriate profile's snapshot, launches applications, and dynamically moves windows to their physical displays and workspaces.
+- `bin/cosmic-session-restore.sh`: Shell wrapper triggered by XDG autostart on user login.
+- `src/cos-cli`: The modified Rust COSMIC CLI tool providing JSON-RPC toplevel management.
+- `config/profiles.default.json`: Default profile definitions template. User configuration lives at `~/.config/cosmic/profiles.json`.
+
+## Quick CLI Reference
+
+```bash
+# Check current profile, auto-detected profile, wifi, and connected displays
+phoenix status
+
+# List all configured profiles and their triggers
+phoenix profile list
+
+# Test environment detection rules and inspect scoring
+phoenix profile detect
+
+# Switch active profile manually (add -r to immediately restore layout)
+phoenix profile switch work
+phoenix profile switch home --restore
+
+# Save the current window state to a specific profile (or active profile)
+phoenix profile save work
+phoenix save
+
+# Restore windows from a specific profile (or auto-detected/last)
+phoenix profile restore home
+phoenix restore
+
+# Add a new profile and optionally learn current Wi-Fi and monitors
+phoenix profile add office --learn --desc "Office workstation"
+```
+
+## Profile Configuration (`~/.config/cosmic/profiles.json`)
+
+Phoenix configures profiles using JSON rules:
+
+```json
+{
+  "version": 1,
+  "auto_detect": true,
+  "default_profile": "home",
+  "profiles": {
+    "home": {
+      "description": "Home dual-monitor setup (Ultrawide + Vertical Lenovo)",
+      "wifi_ssids": [
+        "Airtel_Iamextremelybored",
+        "Airtel_Iamverybored",
+        "Iambored"
+      ],
+      "monitors": ["DP-2", "DP-9"],
+      "monitor_models": ["LEN S24e-10", "LG ULTRAWIDE"],
+      "min_monitors": 2,
+      "priority": 10
+    },
+    "work": {
+      "description": "Work office environment / corporate network",
+      "wifi_ssids": ["Xook FoodMaking"],
+      "monitors": [],
+      "min_monitors": 1,
+      "priority": 10
+    },
+    "mobile": {
+      "description": "Laptop internal display only on-the-go",
+      "wifi_ssids": [],
+      "monitors": ["eDP-2", "eDP-1"],
+      "monitor_models": ["0x0A55"],
+      "max_monitors": 1,
+      "priority": 5
+    }
+  }
+}
+```
 
 ## Setup Instructions
 
-The system expects this project to be located at `~/phoenix`. Follow these steps to set up the services and enable session restoration:
+The system expects this project to be located at `~/phoenix`.
 
-### 1. Make Scripts Executable
-First, ensure that all the scripts in the `bin/` directory have executable permissions:
+### 1. Ensure Scripts are Executable and Symlinked
 ```bash
-chmod +x ~/phoenix/bin/cosmic-session-restore.sh
-chmod +x ~/phoenix/bin/cosmic-session-restorer.py
-chmod +x ~/phoenix/bin/cosmic-session-saver.py
+chmod +x ~/phoenix/bin/*
+ln -sfn ~/phoenix/bin/phoenix ~/.local/bin/phoenix
+ln -sfn ~/phoenix/bin/cosmic-session-restore.sh ~/.local/bin/cosmic-session-restore.sh
+ln -sfn ~/phoenix/bin/cosmic-session-restorer.py ~/.local/bin/cosmic-session-restorer.py
+ln -sfn ~/phoenix/bin/cosmic-session-saver.py ~/.local/bin/cosmic-session-saver.py
 ```
 
-### 2. Configure the Autostart Restorer
-Create an XDG autostart `.desktop` file so the session is restored on boot.
-```bash
-mkdir -p ~/.config/autostart
-cat <<EOF > ~/.config/autostart/cosmic-session-restore.desktop
+### 2. Autostart Restorer
+Created at `~/.config/autostart/cosmic-session-restore.desktop`:
+```ini
 [Desktop Entry]
 Type=Application
-Exec=/home/\$USER/phoenix/bin/cosmic-session-restore.sh
+Exec=/home/sushil-s/phoenix/bin/cosmic-session-restore.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
 Name=COSMIC Session Restorer
 Comment=Restores windows on login
-EOF
 ```
 
-### 3. Configure the Shutdown Saver Service
-Set up a systemd user service that triggers during system shutdown or reboot to save your session.
-```bash
-mkdir -p ~/.config/systemd/user
-cat <<EOF > ~/.config/systemd/user/cosmic-session-saver-shutdown.service
-[Unit]
-Description=Save COSMIC session before shutdown
-DefaultDependencies=no
-Before=shutdown.target reboot.target halt.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/env python3 /home/%u/phoenix/bin/cosmic-session-saver.py
-TimeoutStartSec=10
-
-[Install]
-WantedBy=shutdown.target reboot.target halt.target
-EOF
-```
-
-### 4. Enable and Start the Systemd Service
-Reload the systemd user daemon and enable the service so it runs automatically.
+### 3. Periodic and Shutdown Systemd Services
+- `cosmic-session-saver.timer`: Runs every 3 minutes (`OnCalendar=*:0/3`).
+- `cosmic-session-saver-shutdown.service`: Runs `ExecStop` when logging out or shutting down.
 ```bash
 systemctl --user daemon-reload
+systemctl --user enable --now cosmic-session-saver.timer
 systemctl --user enable cosmic-session-saver-shutdown.service
 ```
-
-That's it! Your COSMIC session state will now be seamlessly saved on shutdown and restored when you log back in.

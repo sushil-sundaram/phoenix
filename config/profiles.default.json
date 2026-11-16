@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "auto_detect": true,
+  "default_profile": "home",
+  "profiles": {
+    "home": {
+      "description": "Home dual-monitor setup (Ultrawide + Vertical Lenovo)",
+      "wifi_ssids": [
+        "Airtel_Iamextremelybored",
+        "Airtel_Iamverybored",
+        "Airtel_Iamverybored_5G",
+        "Iambored"
+      ],
+      "monitors": [
+        "DP-2",
+        "DP-9"
+      ],
+      "monitor_models": [
+        "LEN S24e-10",
+        "LG ULTRAWIDE"
+      ],
+      "min_monitors": 2,
+      "priority": 10
+    },
+    "work": {
+      "description": "Work office environment / corporate network",
+      "wifi_ssids": [
+        "Xook FoodMaking"
+      ],
+      "monitors": [],
+      "monitor_models": [],
+      "min_monitors": 1,
+      "priority": 10
+    },
+    "mobile": {
+      "description": "Laptop internal display only on-the-go",
+      "wifi_ssids": [],
+      "monitors": [
+        "eDP-2",
+        "eDP-1"
+      ],
+      "monitor_models": [
+        "0x0A55"
+      ],
+      "max_monitors": 1,
+      "priority": 5
+    }
+  }
+}

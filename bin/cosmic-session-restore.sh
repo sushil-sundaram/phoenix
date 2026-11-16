@@ -14,4 +14,4 @@ fi
 
 export PATH="$HOME/.cargo/bin:$HOME/.pixi/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 
-python3 "$HOME/phoenix/bin/cosmic-session-restorer.py" > /tmp/cosmic-session-restore.log 2>&1
+python3 "$HOME/phoenix/bin/cosmic-session-restorer.py" "$@" > /tmp/cosmic-session-restore.log 2>&1
