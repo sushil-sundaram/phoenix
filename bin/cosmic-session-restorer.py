@@ -25,7 +25,7 @@ import phoenix_profile
 SNAPSHOT_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json")
 BACKUP_PATH = os.path.expanduser("~/.config/cosmic/session-snapshot.json.bak")
 COS_CLI = os.path.expanduser("~/phoenix/bin/cos-cli")
-IGNORED_APPS = {"steam"}
+IGNORED_APPS = {"steam", "io.github.k33wee.clippy-land"}
 
 def get_env():
     return phoenix_profile.get_env()

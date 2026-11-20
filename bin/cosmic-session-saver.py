@@ -18,7 +18,7 @@ if BIN_DIR not in sys.path:
 import phoenix_profile
 
 COS_CLI = os.path.expanduser("~/phoenix/bin/cos-cli")
-IGNORED_APPS = {"steam"}
+IGNORED_APPS = {"steam", "io.github.k33wee.clippy-land"}
 
 def get_env():
     return phoenix_profile.get_env()
@@ -47,7 +47,7 @@ def capture_session():
         if not app_id:
             app_id = title.split()[0] if title else "unknown"
 
-        if app_id.lower() in IGNORED_APPS:
+        if app_id.lower() in IGNORED_APPS or "applet" in app_id.lower() or title == "Cosmic - Iced":
             continue
 
         ws_list = app.get("workspaces", [])
