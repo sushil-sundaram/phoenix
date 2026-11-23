@@ -9,6 +9,7 @@ import sys
 import os
 import subprocess
 import signal
+import threading
 
 # Ensure phoenix bin is in path for imports
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -28,7 +29,24 @@ from gi.repository import Gtk, Gdk, GLib, Gio
 import phoenix_profile
 
 APP_ID = "com.system76.CosmicAppletWorkspaceLayouts"
-PID_FILE = "/tmp/workspace-layouts-popup.pid"
+PHOENIX_CLI = os.path.join(SCRIPT_DIR, "phoenix")
+
+
+def esc(v):
+    """Escape any dynamic value before it goes into Pango markup."""
+    return GLib.markup_escape_text(str(v))
+
+
+def run_phoenix_async(args, on_done):
+    """Runs `phoenix <args>` off the GTK main loop; on_done(returncode) runs on the main loop."""
+    def worker():
+        try:
+            rc = subprocess.run([sys.executable, PHOENIX_CLI] + args, check=False,
+                                stdin=subprocess.DEVNULL).returncode
+        except OSError:
+            rc = 127
+        GLib.idle_add(lambda: (on_done(rc), False)[1])
+    threading.Thread(target=worker, daemon=True).start()
 
 # Strictly monochrome, minimalist styling
 CUSTOM_CSS = b"""
@@ -91,6 +109,7 @@ class WorkspaceLayoutsPopup:
         self.status_label = None
         self.profiles_container = None
         self.hw_container = None
+        self._busy = False
 
     def create_window(self):
         # Apply CSS
@@ -136,7 +155,6 @@ class WorkspaceLayoutsPopup:
 
         # Hardware detection info card
         self.hw_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-        self.refresh_hardware_card()
         content_box.append(self.hw_container)
 
         # Profile list heading
@@ -147,7 +165,6 @@ class WorkspaceLayoutsPopup:
 
         # Profile list
         self.profiles_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
-        self.refresh_profiles_list()
         content_box.append(self.profiles_container)
 
         scrolled.set_child(content_box)
@@ -161,8 +178,30 @@ class WorkspaceLayoutsPopup:
             self.win.set_content(main_box)
         else:
             self.win.set_child(main_box)
-            
+
         self.win.present()
+        self.refresh_all()
+
+    def refresh_all(self):
+        """Probes hardware once in a worker thread, then rebuilds both cards on the main loop."""
+        def worker():
+            try:
+                result = phoenix_profile.detect_profile()
+            except Exception:
+                result = (None, 0, [], {})
+            GLib.idle_add(lambda: (self._apply_detection(result), False)[1])
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _apply_detection(self, result):
+        if self.win is None:
+            return
+        self.refresh_hardware_card(result)
+        self.refresh_profiles_list(result)
+
+    def set_busy(self, busy):
+        self._busy = busy
+        if self.win is not None:
+            self.win.set_sensitive(not busy)
 
     def on_key_pressed(self, controller, keyval, keycode, state):
         if keyval == Gdk.KEY_Escape:
@@ -194,7 +233,7 @@ class WorkspaceLayoutsPopup:
 
         self.status_label = Gtk.Label()
         self.status_label.set_halign(Gtk.Align.START)
-        self.status_label.set_markup(f"<small>Active: <b>{active_p.capitalize()}</b></small>")
+        self.status_label.set_markup(f"<small>Active: <b>{esc(active_p.capitalize())}</b></small>")
         self.status_label.add_css_class("hardware-info")
 
         title_box.append(title_lbl)
@@ -210,7 +249,7 @@ class WorkspaceLayoutsPopup:
 
         return header_box
 
-    def refresh_hardware_card(self):
+    def refresh_hardware_card(self, detection):
         # Clear
         child = self.hw_container.get_first_child()
         while child:
@@ -235,7 +274,7 @@ class WorkspaceLayoutsPopup:
         card.append(top_row)
 
         # Detect
-        detected_p, score, reasons, env = phoenix_profile.detect_profile()
+        detected_p, score, reasons, env = detection
         wifi_list = env.get("wifi", [])
         wifi = ", ".join(wifi_list) if wifi_list else "None / Wired"
 
@@ -244,7 +283,7 @@ class WorkspaceLayoutsPopup:
         
         info_wifi = Gtk.Label()
         info_wifi.set_halign(Gtk.Align.START)
-        info_wifi.set_markup(f"Wi-Fi: {wifi}")
+        info_wifi.set_text(f"Wi-Fi: {wifi}")
         info_wifi.add_css_class("hardware-info")
         card.append(info_wifi)
 
@@ -252,20 +291,20 @@ class WorkspaceLayoutsPopup:
         info_mon = Gtk.Label()
         info_mon.set_halign(Gtk.Align.START)
         info_mon.set_wrap(True)
-        info_mon.set_markup(f"Displays ({len(monitors)}): {mon_str}")
+        info_mon.set_text(f"Displays ({len(monitors)}): {mon_str}")
         info_mon.add_css_class("hardware-info")
         card.append(info_mon)
 
         if detected_p and score > 0:
             match_lbl = Gtk.Label()
             match_lbl.set_halign(Gtk.Align.START)
-            match_lbl.set_markup(f"<small>Matched: <b>{detected_p.capitalize()}</b> ({', '.join(reasons)})</small>")
+            match_lbl.set_markup(f"<small>Matched: <b>{esc(detected_p.capitalize())}</b> ({esc(', '.join(reasons))})</small>")
             match_lbl.add_css_class("hardware-info")
             card.append(match_lbl)
 
         self.hw_container.append(card)
 
-    def refresh_profiles_list(self):
+    def refresh_profiles_list(self, detection):
         # Clear existing
         child = self.profiles_container.get_first_child()
         while child:
@@ -276,14 +315,14 @@ class WorkspaceLayoutsPopup:
         cfg = phoenix_profile.load_profiles_config()
         state = phoenix_profile.get_profile_state()
         active_name = state.get("active_profile", cfg.get("default_profile", "home"))
-        detected_name, score, _, _ = phoenix_profile.detect_profile()
+        detected_name, score, _, _ = detection
 
         for name, pdata in cfg.get("profiles", {}).items():
             row = self.build_profile_row(name, pdata, is_active=(name == active_name), is_best=(name == detected_name and score > 0))
             self.profiles_container.append(row)
 
         if self.status_label:
-            self.status_label.set_markup(f"<small>Active: <b>{active_name.capitalize()}</b></small>")
+            self.status_label.set_markup(f"<small>Active: <b>{esc(active_name.capitalize())}</b></small>")
 
     def build_profile_row(self, name, pdata, is_active=False, is_best=False):
         row_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -299,7 +338,7 @@ class WorkspaceLayoutsPopup:
 
         # Name
         name_lbl = Gtk.Label()
-        name_lbl.set_markup(f"<b>{name.capitalize()}</b>")
+        name_lbl.set_markup(f"<b>{esc(name.capitalize())}</b>")
         name_lbl.set_halign(Gtk.Align.START)
         top_line.append(name_lbl)
 
@@ -337,9 +376,9 @@ class WorkspaceLayoutsPopup:
         wifis = ", ".join(pdata.get("wifi_ssids", []))
         monitors = ", ".join(pdata.get("monitors", []))
         
-        detail_text = f"<small>{desc}</small>"
+        detail_text = f"<small>{esc(desc)}</small>"
         if wifis or monitors:
-            detail_text += f"\n<span alpha='60%' size='smaller'>Triggers: Wi-Fi: [{wifis or 'any'}] | Displays: [{monitors or 'any'}]</span>"
+            detail_text += f"\n<span alpha='60%' size='smaller'>Triggers: Wi-Fi: [{esc(wifis or 'any')}] | Displays: [{esc(monitors or 'any')}]</span>"
         
         desc_lbl = Gtk.Label()
         desc_lbl.set_markup(detail_text)
@@ -377,32 +416,62 @@ class WorkspaceLayoutsPopup:
         return footer_box
 
     def on_switch_profile(self, profile_name):
+        if self._busy:
+            return
         print(f"Switching to profile: {profile_name}")
-        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "switch", profile_name, "-r"], check=False)
-        self.show_notification(f"Switched to '{profile_name}' and restored window layout.")
-        self.refresh_hardware_card()
-        self.refresh_profiles_list()
+        self.set_busy(True)
+
+        def done(rc):
+            self.set_busy(False)
+            if rc == 0:
+                self.show_notification(f"Switched to '{profile_name}' and restored window layout.")
+            else:
+                self.show_notification(f"Switching to '{profile_name}' failed (exit {rc}).")
+            self.refresh_all()
+        run_phoenix_async(["profile", "switch", "-r", "--", profile_name], done)
 
     def on_save_profile(self, profile_name):
-        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "save", profile_name], check=False)
-        self.show_notification(f"Saved window positions to '{profile_name}'.")
-        self.refresh_profiles_list()
+        if self._busy:
+            return
+        self.set_busy(True)
+
+        def done(rc):
+            self.set_busy(False)
+            self.show_notification(f"Saved window positions to '{profile_name}'." if rc == 0
+                                   else f"Saving '{profile_name}' failed (exit {rc}).")
+            self.refresh_all()
+        run_phoenix_async(["profile", "save", "--", profile_name], done)
 
     def on_auto_detect_clicked(self, btn):
-        detected_name, score, reasons, _ = phoenix_profile.detect_profile()
+        def worker():
+            try:
+                result = phoenix_profile.detect_profile()
+            except Exception:
+                result = (None, 0, [], {})
+            GLib.idle_add(lambda: (self._on_detected(result), False)[1])
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _on_detected(self, result):
+        detected_name, score, _, _ = result
         if detected_name and score > 0:
             self.on_switch_profile(detected_name)
         else:
             self.show_notification("No matching profile detected; using active profile.")
-            self.refresh_hardware_card()
-            self.refresh_profiles_list()
+            self._apply_detection(result)
 
     def on_restore_windows(self, btn):
+        if self._busy:
+            return
         cfg = phoenix_profile.load_profiles_config()
         state = phoenix_profile.get_profile_state()
         active = state.get("active_profile", cfg.get("default_profile", "home"))
-        subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "restore", active], check=False)
-        self.show_notification(f"Restored window layout for '{active}'.")
+        self.set_busy(True)
+
+        def done(rc):
+            self.set_busy(False)
+            self.show_notification(f"Restored window layout for '{active}'." if rc == 0
+                                   else f"Restoring '{active}' failed (exit {rc}).")
+        run_phoenix_async(["profile", "restore", "--", active], done)
 
     def on_new_profile_dialog(self, btn):
         dialog = Gtk.Window(title="Create Profile")
@@ -435,13 +504,21 @@ class WorkspaceLayoutsPopup:
         
         def do_save(b):
             pname = entry.get_text().strip().lower()
-            if pname:
-                subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "add", pname, "--learn"], check=False)
-                subprocess.run(["/home/sushil-s/phoenix/bin/phoenix", "profile", "switch", pname, "-r"], check=False)
-                dialog.close()
-                self.show_notification(f"Created and activated profile '{pname}'.")
-                self.refresh_hardware_card()
-                self.refresh_profiles_list()
+            if not phoenix_profile.is_valid_profile_name(pname):
+                entry.add_css_class("error")
+                lbl.set_text("Use letters, digits, '-' or '_' (max 32):")
+                return
+            dialog.close()
+            self.set_busy(True)
+
+            def added(rc):
+                if rc != 0:
+                    self.set_busy(False)
+                    self.show_notification(f"Creating profile '{pname}' failed (exit {rc}).")
+                    return
+                self.set_busy(False)
+                self.on_switch_profile(pname)
+            run_phoenix_async(["profile", "add", "--learn", "--", pname], added)
 
         save_btn.connect("clicked", do_save)
         btn_row.append(save_btn)
@@ -451,53 +528,33 @@ class WorkspaceLayoutsPopup:
         dialog.present()
 
     def show_notification(self, message):
-        subprocess.run(["notify-send", "-a", "Workspace Layouts", "-i", "workspace-layouts-symbolic", "Workspace Layouts", message], check=False)
-
-def check_single_instance_toggle():
-    """If already running, toggle by closing."""
-    if os.path.exists(PID_FILE):
-        try:
-            with open(PID_FILE, "r") as f:
-                pid = int(f.read().strip())
-            os.kill(pid, 0)
-            os.kill(pid, signal.SIGTERM)
-            try:
-                os.remove(PID_FILE)
-            except Exception:
-                pass
-            sys.exit(0)
-        except (ProcessLookupError, ValueError):
-            pass
+        subprocess.Popen(["notify-send", "-a", "Workspace Layouts", "-i", "workspace-layouts-symbolic", "Workspace Layouts", message],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def main():
-    if "--toggle" in sys.argv:
-        check_single_instance_toggle()
-
-    with open(PID_FILE, "w") as f:
-        f.write(str(os.getpid()))
-
-    def cleanup(*args):
-        try:
-            os.remove(PID_FILE)
-        except Exception:
-            pass
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, cleanup)
-    signal.signal(signal.SIGTERM, cleanup)
-
+    # Gtk.Application with an application_id is already single-instance: a second
+    # launch (e.g. the panel button clicked again) just re-activates this process,
+    # which toggles the window. No PID file needed.
     if HAS_ADW:
         app = Adw.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
     else:
         app = Gtk.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
 
     popup = WorkspaceLayoutsPopup(app)
-    app.connect("activate", lambda a: popup.create_window())
 
-    try:
-        app.run(None)
-    finally:
-        cleanup()
+    def on_activate(a):
+        if popup.win is not None and popup.win.get_visible():
+            popup.win.close()
+            popup.win = None
+        else:
+            popup.create_window()
+
+    app.connect("activate", on_activate)
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, sig, lambda *a: (app.quit(), GLib.SOURCE_REMOVE)[1])
+
+    # --toggle is accepted for backward compatibility; toggling is now the default.
+    sys.exit(app.run(None))
 
 if __name__ == "__main__":
     main()
