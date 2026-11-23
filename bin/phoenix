@@ -60,7 +60,10 @@ def cmd_status(args):
             print(f"    └─ Reason          : {state['last_action_reason']}")
 
     # Check snapshot for active profile
-    paths = phoenix_profile.get_snapshot_paths(active_p)
+    try:
+        paths = phoenix_profile.get_snapshot_paths(active_p)
+    except ValueError:
+        paths = {"snapshot": ""}
     snap_exists = os.path.exists(paths["snapshot"])
     if snap_exists:
         try:
@@ -91,8 +94,10 @@ def cmd_profile_list(args):
     for name, p in cfg.get("profiles", {}).items():
         is_active = "*" if name == active_p else ""
         is_detected = "YES" if name == detected_p else ""
-        paths = phoenix_profile.get_snapshot_paths(name)
-        snap_status = "Saved" if os.path.exists(paths["snapshot"]) else "No snapshot"
+        if phoenix_profile.is_valid_profile_name(name):
+            snap_status = "Saved" if os.path.exists(phoenix_profile.get_snapshot_paths(name)["snapshot"]) else "No snapshot"
+        else:
+            snap_status = "INVALID NAME"
         desc = p.get("description", "")
         print(f"{name:<12} {is_active:<8} {is_detected:<10} {snap_status:<14} {desc}")
 
@@ -130,8 +135,7 @@ def cmd_profile_detect(args):
     best_score = 0
     for name, p in cfg.get("profiles", {}).items():
         score, reasons = phoenix_profile.score_profile(name, p, cur_wifi, cur_monitors, cur_models, cur_details)
-        prefix = "-> WINNER" if score > best_score else "  "
-        print(f"{prefix} [{name}] Score: {score}")
+        print(f"   [{name}] Score: {score}")
         if reasons:
             for r in reasons:
                 print(f"      • {r}")
@@ -149,6 +153,14 @@ def cmd_profile_detect(args):
         fallback = state.get("last_booted_profile") or state.get("last_saved_profile") or cfg.get("default_profile", "home")
         print(f"Auto-Detect Decision: No profile matched. Falling back to last booted/saved: '{fallback}'.")
 
+def _require_profile(name):
+    cfg = phoenix_profile.load_profiles_config()
+    if not phoenix_profile.is_valid_profile_name(name) or name not in cfg.get("profiles", {}):
+        print(f"Error: Profile '{name}' does not exist.", file=sys.stderr)
+        print(f"Available profiles: {', '.join(cfg.get('profiles', {}).keys())}", file=sys.stderr)
+        sys.exit(1)
+
+
 def cmd_profile_switch(args):
     """Switches active profile and optionally restores window layout."""
     cfg = phoenix_profile.load_profiles_config()
@@ -164,16 +176,18 @@ def cmd_profile_switch(args):
     if args.restore:
         print(f"Restoring layout for profile '{name}'...")
         restorer_py = os.path.join(BIN_DIR, "cosmic-session-restorer.py")
-        subprocess.run([sys.executable, restorer_py, "--profile", name])
+        res = subprocess.run([sys.executable, restorer_py, "--profile", name])
+        sys.exit(res.returncode)
 
 def cmd_profile_save(args):
     """Saves session snapshot into specified or active profile."""
     profile_name = args.name
     if not profile_name:
         profile_name = phoenix_profile.resolve_profile_for_save()
+    _require_profile(profile_name)
 
     saver_py = os.path.join(BIN_DIR, "cosmic-session-saver.py")
-    res = subprocess.run([sys.executable, saver_py, "--profile", profile_name])
+    res = subprocess.run([sys.executable, saver_py, "--wait", "--profile", profile_name])
     if res.returncode == 0:
         print(f"Successfully saved session snapshot for profile: '{profile_name}'")
     else:
@@ -183,6 +197,8 @@ def cmd_profile_save(args):
 def cmd_profile_restore(args):
     """Restores session snapshot from specified or auto-detected/last profile."""
     profile_name = args.name
+    if profile_name:
+        _require_profile(profile_name)
     restorer_py = os.path.join(BIN_DIR, "cosmic-session-restorer.py")
     cmd = [sys.executable, restorer_py]
     if profile_name:
@@ -193,8 +209,15 @@ def cmd_profile_restore(args):
 
 def cmd_profile_add(args):
     """Adds a new profile to profiles.json, optionally learning current environment."""
-    cfg = phoenix_profile.load_profiles_config()
+    try:
+        cfg = phoenix_profile.load_profiles_config(strict=True)
+    except phoenix_profile.ConfigError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
     name = args.name.strip()
+    if not phoenix_profile.is_valid_profile_name(name):
+        print("Error: profile names must be 1-32 letters, digits, '-' or '_'.", file=sys.stderr)
+        sys.exit(2)
     if name in cfg.get("profiles", {}):
         print(f"Profile '{name}' already exists. Use edit or update.", file=sys.stderr)
         sys.exit(1)
@@ -222,7 +245,7 @@ def cmd_profile_add(args):
     cfg["profiles"][name] = p_data
     phoenix_profile.save_profiles_config(cfg)
     # Ensure profile storage directory exists
-    phoenix_profile.get_snapshot_paths(name)
+    phoenix_profile.get_snapshot_paths(name, create=True)
     print(f"Successfully created profile '{name}'!")
 
 def cmd_profile_edit(args):

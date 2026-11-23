@@ -143,3 +143,15 @@ Install the Workspace Layouts panel button, monochrome icons, and register it di
 phoenix applet install
 ```
 The formal monochrome layout icon will appear immediately in your COSMIC panel. Clicking it toggles the minimalist workspace switcher where you can view your detected environment, click any profile to switch and restore layouts, or save your active layout.
+
+## Safety & Behaviour Notes
+
+- **Logs:** login restores log to `${XDG_STATE_HOME:-~/.local/state}/phoenix/restore.log` (previous run kept as `restore.log.1`), private to your user.
+- **Launching apps:** only app IDs that resolve to a known mapping, an installed desktop entry, or an installed Flatpak are launched, always as an argument list (never through a shell). Unknown app IDs are skipped with a warning.
+- **Idempotent restore:** apps that already have their windows open are not launched again; restore only fills in what is missing.
+- **Locking:** a restore holds a session lock; timer/shutdown saves skip while it runs, so a half-restored layout never overwrites a good snapshot.
+- **Shrink guard:** unattended saves won't replace a snapshot of 4+ windows with one less than half its size until the drop has persisted 10 minutes. `phoenix save` always saves.
+- **Corruption recovery:** snapshots and config are written atomically; a corrupt snapshot falls back to its `.bak`. Profiles never fall back to another profile's snapshot.
+- **Profile names:** 1–32 letters, digits, `-` or `_`.
+- **Wi-Fi matching:** exact (case-insensitive) SSID match by default. Set `"wifi_partial_match": true` on a profile to allow substring matches.
+- **cos-cli location:** `$PHOENIX_COS_CLI`, then `bin/cos-cli` next to the scripts, then `~/phoenix/bin/cos-cli`, then `PATH`.
